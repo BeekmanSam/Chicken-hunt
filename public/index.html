@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14251f">
+<meta name="description" content="Duck Hunt Dublin — live pub hunt rondom Camden Street en Dame Lane, 7 november 2026.">
+<title>Duck Hunt Dublin | 7 November 2026</title>
+<link rel="preconnect" href="https://tiles.openfreemap.org">
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<style>
+:root{--ink:#132922;--green:#1d5d48;--jade:#1f7655;--orange:#f6ad38;--cream:#fcfaf5;--mute:#728078;--line:#e0e6df;--shadow:0 15px 45px rgba(20,38,30,.14);--safe:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html,body{height:100%;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Arial,sans-serif;color:var(--ink);background:#e9eee6}button,input{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.45;cursor:default}a{color:var(--jade)}
+#app{display:flex;flex-direction:column;height:100dvh;min-height:550px;overflow:hidden}header{height:75px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:0 24px;background:var(--ink);color:white;flex-shrink:0;z-index:10}header .brand{display:flex;align-items:center;gap:12px}.ducky{width:43px;height:43px;border-radius:14px;background:var(--orange);display:grid;place-items:center;font-size:25px;box-shadow:inset 0 0 0 1px #ffffff29}.brand-title{font-size:20px;font-weight:900;letter-spacing:-.055em;line-height:1.05}.brand-sub{font-size:10px;color:#b5c8bd;letter-spacing:.16em;font-weight:800;margin-top:5px}.top-right{display:flex;align-items:center;gap:12px}.live-pill{background:#30483e;border:1px solid #567667;color:#e9fff3;padding:8px 12px;border-radius:100px;font-size:11px;font-weight:800;letter-spacing:.06em}.top-date{font-size:12px;color:#c5d3cb;font-weight:700}
+main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;flex:0 0 385px;background:var(--cream);z-index:5;border-right:1px solid #d9e2d8;display:flex;flex-direction:column;overflow-y:auto;overscroll-behavior:contain}.side-content{padding:25px 23px 24px;display:flex;flex-direction:column;gap:20px}.eyebrow{font-weight:900;letter-spacing:.12em;color:var(--jade);font-size:10px}.h1{font-weight:900;letter-spacing:-.05em;font-size:32px;line-height:1.03;margin:7px 0}.deck{font-size:13px;color:#6a7971;line-height:1.5;margin:8px 0 0}.splithead{display:flex;justify-content:space-between;align-items:center;gap:10px}.small-chip{background:#e4f0e8;color:#1d7652;font-size:11px;font-weight:800;padding:7px 9px;border-radius:8px;white-space:nowrap}.small-chip.orange{background:#fff1d9;color:#a46b11}.hero-time{font-weight:900;font-variant-numeric:tabular-nums;font-size:59px;letter-spacing:-.075em;line-height:1.05;margin-top:7px}.time-label{color:#728078;font-weight:800;font-size:12px;letter-spacing:.04em}.statline{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{border:1px solid var(--line);background:white;padding:11px;border-radius:12px}.stat strong{display:block;font-size:17px;margin-top:3px}.stat span{color:#86938a;font-size:10px;font-weight:800;letter-spacing:.04em}
+.panel{border:1px solid var(--line);border-radius:16px;background:white;padding:15px}.panel h3{font-size:13px;font-weight:900;letter-spacing:-.01em;margin:0 0 10px}.phase-list{display:flex;gap:5px;margin-top:11px}.phase-dot{flex:1;height:9px;background:#e8ece7;border-radius:5px}.phase-dot.done{background:var(--jade)}.phase-dot.active{background:var(--orange);box-shadow:0 0 0 2px #ffda96 inset}.phase-meta{display:flex;justify-content:space-between;gap:10px;margin-top:12px;font-size:11px;font-weight:700;color:#697e71}.notice{background:#fff5e2;border:1px solid #f0d297;border-radius:14px;padding:13px 14px;color:#765219;font-size:12px;line-height:1.45}.notice strong{color:#4b3514}.notice.green{background:#e9f5eb;border-color:#d4e7d6;color:#295d3a}.notice.red{background:#fff0e7;border-color:#ffceb5;color:#8d3e21}.notice.dark{background:#e7eee9;border-color:#cbdad0;color:#355447}
+.btn{width:100%;padding:13px 15px;border-radius:12px;border:0;display:flex;gap:10px;align-items:center;justify-content:center;font-weight:900;font-size:13px;transition:transform .1s}.btn:active{transform:scale(.985)}.btn.primary{background:var(--ink);color:white}.btn.gold{background:var(--orange);color:#352807}.btn.secondary{background:#e9efea;color:#244735}.btn.plain{background:white;border:1px solid var(--line);color:#253c31}.btn-group{display:grid;gap:8px}.hint{font-size:11px;color:#7a877d;line-height:1.5}.rules{margin:0;padding-left:20px;font-size:12px;line-height:1.68;color:#526458}.rules li{padding-left:2px}.muted{font-size:11px;color:#7c8980}.sep{height:1px;background:var(--line)}
+.map-area{position:relative;flex:1;min-width:0;background:#eaf0e7}.map{position:absolute;inset:0}.maplibregl-ctrl-bottom-right{bottom:8px!important}.maplibregl-ctrl-attrib{font-size:9px!important}.maplibregl-popup-content{padding:13px 15px;border-radius:12px;box-shadow:var(--shadow);min-width:185px}.maplibregl-popup-close-button{font-size:20px;padding:3px 6px}.popup-title{font-weight:900;font-size:15px;padding-right:10px}.popup-sub{font-size:11px;color:#738277;margin:5px 0 9px}.popup-link{font-size:12px;font-weight:900;text-decoration:none;color:#146945}.map-controls{position:absolute;z-index:3;top:20px;right:20px;display:flex;flex-direction:column;gap:9px}.round-button{width:48px;height:48px;display:grid;place-items:center;background:#fff;border:1px solid #dae5d9;box-shadow:0 3px 15px #1e48331c;color:#27523c;border-radius:15px;font-size:19px;font-weight:900}.round-button.on{background:var(--ink);color:#fff}.map-badge{position:absolute;left:18px;top:18px;z-index:3;display:flex;align-items:center;gap:10px;background:white;box-shadow:var(--shadow);border-radius:12px;padding:10px 13px}.map-badge i{display:block;width:8px;height:8px;background:#30b86c;border-radius:100%;box-shadow:0 0 0 4px #30b86c22}.map-badge .btitle{font-size:11px;font-weight:900}.map-badge .bsub{font-size:10px;color:#6c7f72;margin-top:3px}.legend{position:absolute;z-index:3;left:18px;bottom:25px;background:#fffcf7f2;box-shadow:var(--shadow);padding:11px 13px;border-radius:12px;display:grid;gap:8px;min-width:171px}.legend-item{font-size:11px;color:#3e5b49;display:flex;gap:8px;align-items:center;font-weight:700}.swatch{height:11px;width:11px;border-radius:4px;border:2px solid #178b56;background:#40c68b4d}.swatch.preview{border:2px dashed #e08e11;background:#ffb52925}.swatch.pub{border-radius:50%;background:#eaa83b;border:2px solid white;box-shadow:0 0 0 1px #ce8220}.swatch.you{border-radius:50%;background:#3588f6;border:2px solid white;box-shadow:0 0 0 1px #2670c7}
+.pub-drawer{position:absolute;z-index:4;right:20px;bottom:20px;width:min(325px,calc(100% - 40px));max-height:min(60%,490px);border-radius:18px;background:#fffcf8;box-shadow:var(--shadow);border:1px solid #e0e6df;overflow:hidden;display:none}.pub-drawer.open{display:flex;flex-direction:column}.pub-head{display:flex;justify-content:space-between;align-items:center;padding:15px 16px 10px}.pub-head h3{margin:0;font-size:15px}.tiny{border:0;background:#e9eeea;padding:7px 9px;border-radius:8px;font-weight:800}.pub-search{margin:0 15px 8px;width:calc(100% - 30px);border-radius:10px;border:1px solid #dae4da;padding:10px 12px;outline:0;font-size:13px}.pub-items{overflow:auto;padding:0 8px 8px}.pub-row{width:100%;border:0;background:transparent;display:flex;text-align:left;gap:9px;padding:11px 9px;border-radius:9px;align-items:center;justify-content:space-between}.pub-row:hover{background:#eef3ec}.pub-row .nm{font-size:12px;font-weight:800}.pub-row .ct{font-size:10px;color:#7b857d;margin-top:4px}.pub-row .nav{color:#257150;font-size:15px}
+.start-panel{position:absolute;z-index:8;inset:0;background:#11231a88;backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;padding:20px}.start-modal{background:#fffcf8;border-radius:25px;box-shadow:0 30px 85px #0b1a14aa;padding:28px;width:min(445px,100%);max-height:92%;overflow:auto}.modal-icon{width:57px;height:57px;border-radius:20px;background:var(--orange);display:grid;place-items:center;font-size:31px}.start-modal h2{font-size:28px;letter-spacing:-.045em;line-height:1.13;margin:19px 0 6px}.start-modal p{font-size:13px;line-height:1.6;color:#627769}.modal-choices{margin:21px 0 14px;display:grid;gap:10px}.modal-divider{text-align:center;color:#7a8b7f;font-size:11px;font-weight:800}.start-modal .fine{font-size:10px;color:#86958a}.session-id{font-weight:900;font-size:10px;color:#7a897f;letter-spacing:.12em}.gps-pulse{height:17px;width:17px;border-radius:50%;background:#3d94e9;border:3px solid white;box-shadow:0 0 0 8px #368ee74a,0 0 0 1px #2263a0}.bottom-toast{position:absolute;z-index:8;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:white;border-radius:12px;padding:12px 17px;box-shadow:var(--shadow);max-width:88%;font-size:12px;font-weight:800;opacity:0;pointer-events:none;transition:opacity .25s}.bottom-toast.show{opacity:1}
+@media(min-width:1150px){.sidebar{width:410px;flex-basis:410px}.side-content{padding:30px}}
+@media(max-width:700px){header{height:62px;padding:0 14px}.brand-title{font-size:17px}.ducky{width:37px;height:37px;font-size:22px;border-radius:12px}.brand-sub{font-size:8px}.top-date{display:none}.live-pill{font-size:9px;padding:7px 9px}main{display:block}.sidebar{position:absolute;bottom:0;left:0;width:100%;height:auto;max-height:62%;border-right:0;border-top:1px solid #dfe8dd;border-radius:20px 20px 0 0;box-shadow:0 -12px 30px #1b392022;overflow:auto;padding-bottom:var(--safe);transition:max-height .22s;z-index:5}.sidebar.folded{max-height:167px}.side-content{padding:16px 18px 21px;gap:12px}.h1{font-size:23px;margin:3px 0}.deck{font-size:11px;margin-top:4px}.hero-time{font-size:43px}.stat,.panel{padding:10px}.panel{border-radius:12px}.btn{padding:12px}.statline{gap:7px}.sidebar.folded .foldable:not(.timerblock){display:none}.sidebar.folded .deck{display:none}.sidebar.folded .h1{font-size:18px}.sidebar.folded .timerblock{display:block}.sidebar.folded .timerblock .statline{display:none}.sidebar.folded .hero-time{font-size:31px;margin-top:3px}.sidebar.folded .time-label{font-size:10px}.mobile-handle{width:48px;height:5px;background:#c5d2c8;border-radius:3px;margin:9px auto 0;cursor:pointer}.map-area{position:absolute;inset:0}.map-controls{top:66px;right:13px}.round-button{width:44px;height:44px}.map-badge{top:12px;left:12px;padding:9px 11px}.legend{bottom:calc(176px + var(--safe));left:12px;padding:8px 9px;min-width:130px;gap:6px}.legend-item{font-size:9px}.pub-drawer{right:12px;bottom:calc(174px + var(--safe));max-height:40%}.maplibregl-ctrl-bottom-right{bottom:calc(167px + var(--safe))!important}.start-modal{padding:23px}.start-panel{align-items:center}.start-modal h2{font-size:25px}}
+@media(max-height:720px) and (max-width:700px){.sidebar{max-height:62%}.sidebar.folded{max-height:137px}.legend{display:none}.maplibregl-ctrl-bottom-right{bottom:140px!important}.pub-drawer{bottom:145px}}
+
+/* v3: multiplayer controls, visible on all screens */
+.role-pill{border:1px solid #567667;background:#30483e;color:#fff;border-radius:50px;padding:8px 11px;font-size:11px;font-weight:900;white-space:nowrap}
+.control-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px}.control-strip .btn{padding:12px 5px;font-size:12px}
+#roomInfo{font-size:11px;color:#557264;line-height:1.4}.server-state{color:#83502c;font-weight:800;font-size:11px}.server-state.ok{color:#27864e}
+#startSharedBtn{background:#f6ad38;color:#302814}#resetSharedBtn{background:#f8e9e2;color:#943e26}
+#statusRibbon{display:none;padding:8px 14px;background:#fbe3db;color:#8b3825;font-size:12px;font-weight:800;text-align:center}
+#statusRibbon.show{display:block}
+.role-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}
+.role-option{border:2px solid #dfebe2;background:white;border-radius:16px;padding:18px 12px;display:grid;justify-items:center;gap:9px;text-align:center;font-weight:900;color:#173b2c}
+.role-option .emoji{font-size:36px}.role-option small{font-size:11px;font-weight:500;line-height:1.3;color:#718277}
+.role-option.chosen{background:#e8f6e9;border-color:#128d59;box-shadow:inset 0 0 0 1px #128d59}
+#roleConfirm:disabled{opacity:.45}
+.start-modal .share-hint{padding:11px;border-radius:10px;background:#f1f3ec;font-size:12px}
+.photo-overlay{position:absolute;top:105px;left:50%;transform:translateX(-50%);z-index:7;width:min(470px,calc(100% - 22px));background:#fff7df;border:2px solid #e9ad37;border-radius:17px;padding:15px 16px;box-shadow:0 15px 48px #091e1280;display:none}
+.photo-overlay.show{display:block}.photo-overlay strong{display:block;font-size:16px;margin-bottom:5px}.photo-overlay p{font-size:12px;line-height:1.5;margin:3px 0 12px;color:#684f23}
+.photo-overlay button{padding:9px 17px;border:0;border-radius:9px;background:#1e503d;color:#fff;font-weight:900;font-size:12px}
+.game-mini-header{display:flex;align-items:center;justify-content:space-between;gap:8px}
+#detailsBtn{display:none}
+@media(max-width:700px){
+  #app{min-height:0}.top-right{gap:7px}.live-pill{font-size:9px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.role-pill{font-size:10px;padding:7px}
+  .sidebar{max-height:94%;border-radius:17px 17px 0 0}.sidebar.folded{max-height:none;height:228px;overflow:hidden}.sidebar:not(.folded){height:calc(100dvh - 62px);max-height:none;overflow-y:auto}
+  .side-content{padding:10px 15px calc(20px + var(--safe));gap:9px}
+  .sidebar.folded .side-content{height:calc(100% - 10px);overflow:hidden}
+  .sidebar.folded .game-intro,.sidebar.folded .foldable:not(.timerblock){display:none}
+  .sidebar.folded .timerblock .statline{display:grid;margin-top:6px!important}
+  .sidebar.folded .hero-time{font-size:29px;margin:1px 0 0}
+  .sidebar.folded .stat{padding:7px 9px}.sidebar.folded .stat strong{font-size:12px;margin-top:0}.sidebar.folded .stat span{font-size:9px}
+  .timerblock{order:0}.control-wrap{order:1}.game-intro{order:-1}
+  .sidebar.folded .mobile-handle{margin:6px auto 0}
+  #detailsBtn{display:block;background:#e7eee9;color:#2a6348;border:0;border-radius:8px;padding:7px;font-size:11px;font-weight:900;max-width:100px;margin:3px auto 0}
+  .control-strip .btn{padding:10px 5px;font-size:11px;border-radius:9px}
+  .sidebar.folded #roomInfo,.sidebar.folded .server-state{display:none}
+  .map-controls{top:69px;right:10px}.map-badge{top:12px;max-width:calc(100% - 85px)}.map-badge .bsub{font-size:9px}
+  .legend{bottom:calc(236px + var(--safe));padding:6px 8px;gap:4px;min-width:0}.legend-item{font-size:9px}
+  .pub-drawer{bottom:calc(240px + var(--safe));max-height:48%}.maplibregl-ctrl-bottom-right{bottom:240px!important}
+  .photo-overlay{top:160px;width:calc(100% - 18px);padding:13px 14px}
+  .start-panel{padding:10px;align-items:center}.start-modal{padding:20px;width:min(430px,100%)}.start-modal h2{font-size:24px}
+  .role-option{padding:14px 9px}.role-option .emoji{font-size:32px}
+}
+@media(max-width:700px) and (max-height:650px){.sidebar.folded{height:200px}.sidebar.folded .statline{display:none!important}.photo-overlay{top:100px}}
+
+</style>
+</head>
+<body>
+<div id="app">
+<header>
+  <div class="brand"><div class="ducky">🦆</div><div><div class="brand-title">DUCK HUNT <span style="color:#f3b64d">DUBLIN</span></div><div class="brand-sub">2 DUCKS · 2 HUNTERS · 2026</div></div></div>
+  <div class="top-right"><span class="top-date">SAT 7 NOV · FROM 17:00</span><button class="role-pill" id="roleChip" title="Wijzig je rol" style="display:none">ROL</button><span class="live-pill" id="livePill">● LOBBY</span></div>
+</header>
+<div id="statusRibbon" role="alert">Geen verbinding met de spelsynchronisatie. Gebruik de nieuwe Cloudflare Workers-link, niet de oude Pages-link.</div>
+<main>
+  <aside class="sidebar" id="sidebar"><div class="mobile-handle" id="mobileHandle" role="button" tabindex="0" aria-label="Open of sluit spelinformatie"></div><div class="side-content">
+    <section class="game-intro"><div class="splithead"><span class="eyebrow" id="gameEyebrow">MISSION CONTROL</span><span class="small-chip orange" id="roundChip">6 ZONES</span></div><h1 class="h1" id="sideTitle">Run, duck, run.</h1><p class="deck" id="sideDeck">Twee eenden. Twee jagers. Eén stad. Zoek elkaar in de pubs van Dublin voordat de speelzone dichtklapt.</p></section>
+    <section class="foldable timerblock"><div class="time-label" id="timerLabel">START OVER</div><div class="hero-time" id="mainTimer">--:--</div><div class="statline" style="margin-top:12px"><div class="stat"><span>VOLGENDE ZONE</span><strong id="nextTime">17:20</strong></div><div class="stat"><span>HUIDIGE ZONE</span><strong id="zoneSize">Startgebied</strong></div></div></section>
+
+    <section class="control-wrap"><div class="control-strip">
+      <button class="btn gold" id="startSharedBtn" disabled>▶ START</button>
+      <button class="btn" id="resetSharedBtn" disabled>↺ RESET</button>
+      <button class="btn secondary" id="quickShareBtn">↗ DEEL</button>
+    </div><button id="detailsBtn">▲ Alle spelinfo</button>
+    <div id="roomInfo">SPELROOM WORDT GELADEN…</div><div class="server-state" id="connectionLabel">Verbinden met live spel…</div></section>
+    <section class="panel foldable"><div class="splithead"><h3>ZONE PROGRESSION</h3><span class="session-id" id="sessionId">SYNCHRONISED</span></div><div class="phase-list" id="phaseList"></div><div class="phase-meta"><span id="phaseStart">17:00 · START</span><span>120 MIN · FINISH</span></div><p class="hint" style="margin-bottom:0">Iedere 20 minuten krimpt het gebied. De volgende zone verschijnt 5 minuten eerder.</p></section>
+    <div class="notice green foldable" id="noticeBox"><strong>🦆 Eerste 10 minuten:</strong> de eenden vertrekken, terwijl de jagers blijven wachten op de startlocatie.</div>
+    <div class="btn-group foldable"><button class="btn gold" id="shareBtn">↗ Deel de spellink</button><button class="btn plain" id="audioBtn">♪ Geluid aanzetten</button><button class="btn secondary" id="pubsBtn">🍺 Bekijk alle pubs</button></div>
+    <section class="panel foldable"><h3>DE REGELS</h3><ul class="rules"><li>De eenden blijven samen; de jagers ook.</li><li>De eenden mogen pubs in en uit.</li><li>Jagers die een pub doorzoeken, bestellen volgens jullie afspraak een alcoholische versnapering. Drink met mate; niemand hoeft alcohol te drinken.</li><li>De jagers winnen zodra ze beide eenden fysiek vinden.</li><li>Blijven de eenden na twee uur ongezien? Dan winnen de eenden.</li><li>Spelers houden zich eerlijk aan de actieve zone. Publieke, veilige routes blijven leidend.</li></ul></section>
+    <p class="hint foldable">GPS is alleen zichtbaar op jouw eigen iPhone en wordt niet verstuurd. De gedeelde server bewaart alleen de starttijd en willekeurige zones, geen spelerslocaties. Iedere start krijgt nieuwe random zones. Laat je telefoon ontgrendeld om live geluidssignalen te horen.</p>
+  </div></aside>
+  <div class="map-area"><div id="map" class="map" role="application" aria-label="Interactieve Duck Hunt kaart van Dublin"></div>
+    <div class="map-badge"><i></i><div><div class="btitle" id="mapBadgeTitle">DUCK HUNT TERRITORY</div><div class="bsub" id="mapBadgeSub">Dame Lane → Camden Street</div></div></div>
+    <div class="map-controls"><button class="round-button" id="locateBtn" aria-label="Toon mijn locatie" title="Mijn locatie">◎</button><button class="round-button" id="fitBtn" aria-label="Centreer speelgebied" title="Toon gebied">▢</button><button class="round-button" id="listBtn" aria-label="Bekijk alle pubs" title="Pubs">🍺</button></div>
+    <div class="legend"><div class="legend-item"><span class="swatch"></span>Actieve speelzone</div><div class="legend-item"><span class="swatch preview"></span>Volgende zone</div><div class="legend-item"><span class="swatch pub"></span>Pub / bar</div><div class="legend-item"><span class="swatch you"></span>Jouw locatie</div></div>
+    <div class="pub-drawer" id="pubDrawer"><div class="pub-head"><h3 id="pubCount">🍺 Pubs in het spel</h3><button class="tiny" id="closePubs">SLUIT ×</button></div><input id="pubSearch" class="pub-search" placeholder="Zoek een pub..." autocomplete="off"><div class="pub-items" id="pubItems"></div></div>
+    <div class="photo-overlay" id="photoOverlay" role="alertdialog" aria-live="assertive" aria-label="Foto opdracht"><strong id="photoTitle">📸 FOTOCHALLENGE</strong><p id="photoText">Maak samen een foto.</p><button id="photoDismissBtn">✓ Begrepen, sluit melding</button></div>
+    <div class="bottom-toast" id="toast" role="status"></div>
+  </div>
+</main>
+  <div class="start-panel" id="startPanel">
+    <div class="start-modal">
+      <div class="modal-icon">🦆</div>
+      <div class="eyebrow" style="margin-top:17px">WELCOME TO THE HUNT</div>
+      <h2>Wat is jouw rol?</h2>
+      <p>Kies eerst je team. Daarna kom je in dezelfde wachtkamer als je vrienden. Iedereen kan het spel starten of resetten.</p>
+      <div class="role-options">
+        <button class="role-option" type="button" data-role="duck"><span class="emoji">🦆</span><span>DUCK</span><small>Verstop je en ontvang foto-opdrachten</small></button>
+        <button class="role-option" type="button" data-role="hunter"><span class="emoji">🎯</span><span>HUNTER</span><small>Zoek de eenden in de pubs</small></button>
+      </div>
+      <button class="btn primary" id="roleConfirm" disabled>Ga naar de lobby →</button>
+      <p class="share-hint">📱 Eén persoon deelt de <strong>volledige spellink</strong> via WhatsApp. Iedereen die dezelfde link opent, zit in hetzelfde spel.</p>
+      <p class="fine">Geen accounts of live locatie delen nodig. Rolverdeling is persoonlijk en niet zichtbaar voor andere spelers.</p>
+    </div>
+  </div>
+
+</div>
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<script>
+'use strict';
+// DUCK HUNT DUBLIN v3 — one shared Cloudflare room; deterministic seeded zones.
+const RULES={duration:120,headstart:10,zones:6,step:20,warning:5,scheduleUTC:Date.UTC(2026,10,7,17,0,0)};
+// Dublin is UTC+0 on 7 November 2026; 17:00 Dublin = 17:00 UTC.
+const REF=[-6.265,53.3383], METERS_X=66300, METERS_Y=111200;
+const BASE=[[-6.27115,53.34495],[-6.26285,53.3453],[-6.25885,53.3445],[-6.2584,53.3427],[-6.2601,53.34025],[-6.2600,53.33835],[-6.2609,53.33675],[-6.26265,53.3356],[-6.26255,53.3330],[-6.2653,53.33125],[-6.2690,53.33175],[-6.2707,53.3336],[-6.2719,53.3374],[-6.2701,53.3396],[-6.2705,53.3422]];
+// Fixed documented pub positions ensure reproducible target selection even if Overpass API is unavailable.
+// Checked against public venue directories, 26 October 2026. Coordinates for additions are approximate.
+// Offline backup for when the public OpenStreetMap API is slow or unavailable.
+// Google Maps searches always use name + street address, not these approximate coordinates.
+const FALLBACK=[
+ {"name": "The Stag's Head", "lat": 53.34382, "lng": -6.26352, "kind": "pub", "address": "Dame Court 1", "approx": true},
+ {"name": "The Dame Tavern", "lat": 53.34382, "lng": -6.26392, "kind": "pub", "address": "Dame Court 18", "approx": true},
+ {"name": "The Bankers", "lat": 53.34396, "lng": -6.26248, "kind": "pub", "address": "Trinity Street", "approx": true},
+ {"name": "J. T. Pim's", "lat": 53.34375, "lng": -6.26435, "kind": "bar", "address": "4 South Great George's Street", "approx": true},
+ {"name": "The Exchequer", "lat": 53.34315, "lng": -6.26285, "kind": "pub", "address": "Exchequer Street", "approx": true},
+ {"name": "The Old Stand", "lat": 53.34286, "lng": -6.26157, "kind": "pub", "address": "Exchequer Street 37", "approx": true},
+ {"name": "The International Bar", "lat": 53.34275, "lng": -6.2615, "kind": "pub", "address": "Wicklow Street 23", "approx": true},
+ {"name": "The George", "lat": 53.34381, "lng": -6.26465, "kind": "bar", "address": "South Great George's Street 89", "approx": true},
+ {"name": "Nolita", "lat": 53.34315, "lng": -6.26427, "kind": "bar", "address": "South Great George's Street 64-65", "approx": true},
+ {"name": "The Long Hall", "lat": 53.34187, "lng": -6.26533, "kind": "pub", "address": "South Great George's Street 51", "approx": true},
+ {"name": "Hogan's", "lat": 53.34199, "lng": -6.26461, "kind": "pub", "address": "South Great George's Street 36", "approx": true},
+ {"name": "Grogan's", "lat": 53.34224, "lng": -6.26271, "kind": "pub", "address": "South William Street 15", "approx": true},
+ {"name": "Pygmalion", "lat": 53.34236, "lng": -6.26207, "kind": "bar", "address": "South William Street", "approx": true},
+ {"name": "The Rag Trader", "lat": 53.34264, "lng": -6.26327, "kind": "pub", "address": "Drury Street 39", "approx": true},
+ {"name": "O'Regan's", "lat": 53.34243, "lng": -6.26403, "kind": "pub", "address": "Fade Street", "approx": true},
+ {"name": "The Bar With No Name", "lat": 53.34249, "lng": -6.26395, "kind": "bar", "address": "Fade Street 3", "approx": true},
+ {"name": "Idlewild", "lat": 53.34238, "lng": -6.26401, "kind": "bar", "address": "Fade Street 14", "approx": true},
+ {"name": "Drury Buildings", "lat": 53.34185, "lng": -6.26326, "kind": "bar", "address": "Drury Street 52-55", "approx": true},
+ {"name": "The Market Bar", "lat": 53.34225, "lng": -6.26391, "kind": "bar", "address": "Fade Street 14a", "approx": true},
+ {"name": "The Hairy Lemon", "lat": 53.34128, "lng": -6.26382, "kind": "pub", "address": "Stephen Street Lower", "approx": true},
+ {"name": "Caribou", "lat": 53.34093, "lng": -6.26407, "kind": "pub", "address": "Stephen Street Lower 28-30", "approx": true},
+ {"name": "The Swan", "lat": 53.339625, "lng": -6.265546, "kind": "pub", "address": "York Street 58", "approx": true},
+ {"name": "The Capitol Lounge", "lat": 53.34119, "lng": -6.26472, "kind": "bar", "address": "Aungier Street 1-2", "approx": true},
+ {"name": "Egans", "lat": 53.34042, "lng": -6.26474, "kind": "bar", "address": "Aungier Street 17-18", "approx": true},
+ {"name": "Thomas Moore Inn", "lat": 53.34093, "lng": -6.26479, "kind": "pub", "address": "Aungier Street 12", "approx": true},
+ {"name": "John O'Dwyer's", "lat": 53.33923, "lng": -6.26505, "kind": "pub", "address": "Aungier Street 43", "approx": true},
+ {"name": "Peter's Pub", "lat": 53.34003, "lng": -6.26198, "kind": "pub", "address": "Johnson's Place", "approx": true},
+ {"name": "The Snug Bar", "lat": 53.34036, "lng": -6.26407, "kind": "bar", "address": "Stephen Street Upper 15", "approx": true},
+ {"name": "Kehoe’s", "lat": 53.34124, "lng": -6.25944, "kind": "pub", "address": "South Anne Street 9", "approx": true},
+ {"name": "Brogan's", "lat": 53.34437, "lng": -6.26633, "kind": "pub", "address": "Dame Street 75", "approx": true},
+ {"name": "Whelan's", "lat": 53.336595, "lng": -6.265875, "kind": "pub", "address": "Wexford Street 25", "approx": true},
+ {"name": "Flannery's", "lat": 53.33613, "lng": -6.26501, "kind": "pub", "address": "Camden Street Lower 6-8", "approx": true},
+ {"name": "Ryan's", "lat": 53.33634, "lng": -6.26582, "kind": "pub", "address": "Camden Street Lower 92", "approx": true},
+ {"name": "The Landmark", "lat": 53.33642, "lng": -6.2649, "kind": "pub", "address": "Wexford Street 40 / Kevin Street Lower", "approx": true},
+ {"name": "The Jar", "lat": 53.33608, "lng": -6.2652, "kind": "bar", "address": "Wexford Street 31", "approx": true},
+ {"name": "Opium", "lat": 53.33645, "lng": -6.26561, "kind": "bar", "address": "Wexford Street 26", "approx": true},
+ {"name": "Teach Tábhairne ag Teacht", "lat": 53.33703, "lng": -6.26581, "kind": "pub", "address": "Wexford Street 11", "approx": true},
+ {"name": "Porters", "lat": 53.33681, "lng": -6.2654, "kind": "pub", "address": "Camden Street Lower 16", "approx": true},
+ {"name": "Anseo", "lat": 53.33669, "lng": -6.2654, "kind": "pub", "address": "Camden Street Lower 18", "approx": true},
+ {"name": "Camden Bites & Brews", "lat": 53.33705, "lng": -6.26554, "kind": "bar", "address": "Camden Street Lower 9", "approx": true},
+ {"name": "Cassidy's", "lat": 53.33406, "lng": -6.26494, "kind": "pub", "address": "Camden Street Lower 42", "approx": true},
+ {"name": "Devitt's", "lat": 53.33555, "lng": -6.26553, "kind": "pub", "address": "Camden Street Lower 78", "approx": true},
+ {"name": "Tucker Reilly's", "lat": 53.33511, "lng": -6.26543, "kind": "pub", "address": "Camden Street Lower 72-73", "approx": true},
+ {"name": "The Camden", "lat": 53.33472, "lng": -6.26483, "kind": "bar", "address": "Camden Street Lower 84-87", "approx": true},
+ {"name": "Huck's", "lat": 53.33649, "lng": -6.26504, "kind": "bar", "address": "Camden Street Lower 8", "approx": true},
+ {"name": "The Bleeding Horse", "lat": 53.33349, "lng": -6.26473, "kind": "pub", "address": "Camden Street Upper 24-25", "approx": true},
+ {"name": "Keavan's Port", "lat": 53.33274, "lng": -6.26467, "kind": "pub", "address": "Camden Street Upper 1", "approx": true},
+ {"name": "The Odeon", "lat": 53.33588, "lng": -6.26355, "kind": "bar", "address": "Harcourt Street 57", "approx": true},
+ {"name": "Dicey's Garden", "lat": 53.33742, "lng": -6.26397, "kind": "bar", "address": "Harcourt Street 21-25", "approx": true},
+];
+const HOTSPOTS=[
+ {name:'Dame Lane',x:-6.26372,y:53.34345},
+ {name:'Dame Court',x:-6.26423,y:53.34305},
+ {name:'South William Street',x:-6.26295,y:53.34185},
+ {name:'Georges Street North',x:-6.2647,y:53.34245},
+ {name:'Drury Street',x:-6.26372,y:53.3412},
+ {name:'Wexford Street',x:-6.26535,y:53.3366},
+ {name:'Camden Street Lower',x:-6.26525,y:53.33515},
+ {name:'Camden Street Upper',x:-6.2650,y:53.33355}
+];
+const RADII=[null,885,650,470,260,150];
+const $=id=>document.getElementById(id);
+function xy(p){return [(p[0]-REF[0])*METERS_X,(p[1]-REF[1])*METERS_Y]}
+function ll(p){return [REF[0]+p[0]/METERS_X,REF[1]+p[1]/METERS_Y]}
+function vecAdd(a,b){return[a[0]+b[0],a[1]+b[1]]}
+function d2(a,b){return Math.hypot(a[0]-b[0],a[1]-b[1])}
+function polygonArea(p){let v=0;for(let i=0;i<p.length;i++){const a=p[i],b=p[(i+1)%p.length];v+=a[0]*b[1]-b[0]*a[1]}return v/2}
+function contained(pt,poly){let c=false;for(let i=0,j=poly.length-1;i<poly.length;j=i++){const a=poly[i],b=poly[j];if(((a[1]>pt[1])!==(b[1]>pt[1]))&&(pt[0]<(b[0]-a[0])*(pt[1]-a[1])/(b[1]-a[1])+a[0]))c=!c}return c}
+// Sutherland-Hodgman; clipping arbitrary game boundary by convex 96-sided circle.
+function clipPoly(subject,clip){let out=subject.slice();const orient=Math.sign(polygonArea(clip))||1;for(let i=0;i<clip.length;i++){const a=clip[i],b=clip[(i+1)%clip.length],input=out;out=[];if(!input.length)break;const inside=p=>orient*((b[0]-a[0])*(p[1]-a[1])-(b[1]-a[1])*(p[0]-a[0]))>=-1e-7;const intersect=(p,q)=>{let t1=b[0]-a[0],t2=b[1]-a[1],u=q[0]-p[0],v=q[1]-p[1];let denom=t1*v-t2*u;if(Math.abs(denom)<1e-12)return q;let t=((a[0]-p[0])*v-(a[1]-p[1])*u)/denom;return[a[0]+t*t1,a[1]+t*t2]};for(let j=0;j<input.length;j++){const p=input[j],q=input[(j+1)%input.length];const a1=inside(p),a2=inside(q);if(a1&&a2)out.push(q);else if(a1&&!a2)out.push(intersect(p,q));else if(!a1&&a2)out.push(intersect(p,q),q)}}return out}
+// More numerically stable segment-line intersection.
+function clipConvex(subject,clip){let out=subject.slice();const sign=Math.sign(polygonArea(clip))||1;for(let i=0;i<clip.length;i++){const A=clip[i],B=clip[(i+1)%clip.length],input=out;out=[];if(!input.length)break;const dist=p=>sign*((B[0]-A[0])*(p[1]-A[1])-(B[1]-A[1])*(p[0]-A[0]));for(let j=0;j<input.length;j++){const P=input[j],Q=input[(j+1)%input.length],p=dist(P),q=dist(Q),insideP=p>=-1e-8,insideQ=q>=-1e-8;if(insideP&&insideQ)out.push(Q);else if(insideP!==insideQ){const t=p/(p-q);let cross=[P[0]+t*(Q[0]-P[0]),P[1]+t*(Q[1]-P[1])];out.push(cross);if(insideQ)out.push(Q)}}}return out}
+function circle(center,r){return Array.from({length:96},(_,i)=>[center[0]+r*Math.cos(i*2*Math.PI/96),center[1]+r*Math.sin(i*2*Math.PI/96)])}
+function hashSeed(seed){let s=seed>>>0;return function(){s+=0x6D2B79F5;let t=s;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
+function deriveZones(seed){
+ const random=hashSeed(seed),baseXY=BASE.map(xy),baseCenter=xy([-6.265,53.3383]);
+ // The finish is random, but always near a cluster of pubs (not an empty park).
+ const good=HOTSPOTS.filter(h=>FALLBACK.filter(p=>d2(xy([p.lng,p.lat]),xy([h.x,h.y]))<150).length>=2);
+ const choices=good.length?good:HOTSPOTS;
+ const h=choices[Math.floor(random()*choices.length)];
+ const centers=Array(6);centers[5]=xy([h.x,h.y]);
+ // Build backwards, with bounded centre shifts. Every new ring fits entirely in its predecessor.
+ // Move early centres towards the original area's centre so the first cut is mild.
+ for(let i=4;i>=1;i--){
+   const child=centers[i+1];
+   const toward=[baseCenter[0]-child[0],baseCenter[1]-child[1]];
+   const length=Math.hypot(...toward)||1;
+   const available=RADII[i]-RADII[i+1];
+   const intended=Math.min(available*.67,length);
+   const jitter=available*.17;
+   const a=random()*Math.PI*2;
+   let step=[toward[0]/length*intended+Math.cos(a)*jitter,toward[1]/length*intended+Math.sin(a)*jitter];
+   const stepLen=Math.hypot(...step);
+   if(stepLen>available*.88)step=step.map(v=>v*available*.88/stepLen);
+   centers[i]=vecAdd(child,step);
+ }
+ // First shrink: a small, random trim of the full irregular boundary.
+ // This avoids suddenly forcing people from Camden Street to Dame Lane (or vice versa).
+ const xs=baseXY.map(p=>p[0]),ys=baseXY.map(p=>p[1]);
+ const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+ const xTrim=.065+random()*.035,yTrim=.055+random()*.035;
+ const cx=(minX+maxX)/2+(random()-.5)*20,cy=(minY+maxY)/2+(random()-.5)*20;
+ const hx=(maxX-minX)*(.5-xTrim),hy=(maxY-minY)*(.5-yTrim);
+ const insideBox=[[cx-hx,cy-hy],[cx+hx,cy-hy],[cx+hx,cy+hy],[cx-hx,cy+hy]];
+ const first=clipConvex(baseXY,insideBox);
+ const shapes=[BASE,first.map(ll)];
+ for(let i=2;i<6;i++){
+   const previous=shapes[i-1].map(xy);
+   const clipped=clipConvex(previous,circle(centers[i],RADII[i]));
+   shapes.push(clipped.length>=3?clipped.map(ll):shapes[i-1]);
+ }
+ return{shapes,centers,final:h,anchorIndex:HOTSPOTS.indexOf(h),areas:shapes.map(s=>Math.round(Math.abs(polygonArea(s.map(xy)))/1000))};
+}
+function feature(poly){let p=poly.slice();if(!p.length)return {type:'FeatureCollection',features:[]};return{type:'FeatureCollection',features:[{type:'Feature',properties:{},geometry:{type:'Polygon',coordinates:[[...p,p[0]]]}}]}}
+function emptyFC(){return{type:'FeatureCollection',features:[]}}
+function normalizePub(n){return n.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,'').replace(/^the/,'')}
+function isPubInBase(p){return contained([p.lng,p.lat],BASE)}
+function isPubInZone(p,index){return contained([p.lng,p.lat],zones.shapes[index])}
+function formatClock(ts){return new Date(ts).toLocaleTimeString('en-GB',{timeZone:'Europe/Dublin',hour:'2-digit',minute:'2-digit',hour12:false})}
+function msToTimer(ms){let s=Math.max(0,Math.ceil(ms/1000));return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
+let map=null,zones=null,game=null,pubs=FALLBACK.slice(),mapReady=false,audioEnabled=false,audioContext=null,currentLocation=null,currentMarker=null,currentAccuracy=null,lastPhase=-1,lastCue='',openPub=null,pubsVisible=true,toastTimer=null,geoWatch=null,lastStageStamp='';
+function pubFeatureCollection(){return {type:'FeatureCollection',features:(pubsVisible?pubs:[]).map((p,i)=>({type:'Feature',properties:{name:p.name,kind:p.kind,index:i,inside:zones?isPubInZone(p,Math.max(0,currentPhase())):true},geometry:{type:'Point',coordinates:[p.lng,p.lat]}}))}}
+function currentPhase(now=clockNow()){if(!game)return 0;const mins=(now-game.start)/60000;return Math.min(5,Math.max(0,Math.floor(mins/RULES.step)))}
+function refreshMap(){if(!mapReady||!zones)return;const stage=currentPhase(),mins=game?(clockNow()-game.start)/60000:0,nextShown=game&&mins>=0&&mins<100&&mins%20>=15;const active=zones.shapes[stage];map.getSource('zone').setData(feature(active));map.getSource('upcoming').setData(nextShown?feature(zones.shapes[stage+1]):emptyFC());map.getSource('pubs').setData(pubFeatureCollection());}
+function updatePubSource(){if(mapReady)map.getSource('pubs').setData(pubFeatureCollection());renderPubs()}
+function initMap(){if(!window.maplibregl){$('map').innerHTML='<div style="padding:36px">Kaartbibliotheek kon niet laden. Controleer je internetverbinding en herlaad de pagina.</div>';return}
+ map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/bright',center:[-6.2651,53.33905],zoom:14.3,pitch:0,bearing:0,attributionControl:true,cooperativeGestures:false});
+ map.addControl(new maplibregl.NavigationControl({showCompass:false}), 'bottom-right');
+ map.on('load',()=>{mapReady=true;map.addSource('zone',{type:'geojson',data:feature(BASE)});map.addSource('upcoming',{type:'geojson',data:emptyFC()});map.addSource('pubs',{type:'geojson',data:pubFeatureCollection()});
+ map.addLayer({id:'zone-fill',type:'fill',source:'zone',paint:{'fill-color':'#39bd7b','fill-opacity':0.15}});
+ map.addLayer({id:'zone-border-glow',type:'line',source:'zone',paint:{'line-color':'#ffffff','line-width':9,'line-opacity':.87}});
+ map.addLayer({id:'zone-border',type:'line',source:'zone',paint:{'line-color':'#14935b','line-width':4,'line-opacity':1}});
+ map.addLayer({id:'upcoming-fill',type:'fill',source:'upcoming',paint:{'fill-color':'#ffbd4a','fill-opacity':.22}});
+ map.addLayer({id:'upcoming-outline',type:'line',source:'upcoming',paint:{'line-color':'#d8860f','line-width':4,'line-dasharray':[1.6,1.4]}});
+ map.addLayer({id:'pub-shadows',type:'circle',source:'pubs',paint:{'circle-radius':12,'circle-color':'#fff8eb','circle-stroke-width':0}});
+ map.addLayer({id:'pub-circles',type:'circle',source:'pubs',paint:{'circle-radius':8,'circle-color':['case',['get','inside'],'#e79d2c','#b6aaa0'],'circle-stroke-color':'#fff','circle-stroke-width':2}});
+ map.addLayer({id:'pub-label',type:'symbol',source:'pubs',minzoom:14.15,layout:{'text-field':['get','name'],'text-size':11.5,'text-font':['Open Sans Regular'],'text-offset':[0,1.45],'text-anchor':'top','text-optional':true},paint:{'text-color':'#334b3c','text-halo-color':'#fff','text-halo-width':1.8}});
+ for(const id of ['pub-circles','pub-label']){map.on('click',id,(e)=>{if(!e.features?.length)return;const p=pubs[e.features[0].properties.index];if(p)showPub(p)});map.on('mouseenter',id,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',id,()=>map.getCanvas().style.cursor='')}
+ fitBase();refreshMap();updatePubSource();});
+ map.on('error',e=>{if(e.error)console.warn('Map resource error',e.error.message)});
+}
+function fitBase(){if(!map)return;const xs=BASE.map(p=>p[0]),ys=BASE.map(p=>p[1]);const mobile=window.innerWidth<=700;map.fitBounds([[Math.min(...xs),Math.min(...ys)],[Math.max(...xs),Math.max(...ys)]],{padding:mobile?{top:95,bottom:295,left:36,right:36}:{top:55,bottom:55,left:55,right:55},duration:700,maxZoom:15.6})}
+function flyPub(p){map.flyTo({center:[p.lng,p.lat],zoom:16.5,essential:true});showPub(p)}
+function showPub(p){if(!map)return;if(openPub)openPub.remove();const link='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(p.name+', '+(p.address||'Dublin 2')+', Dublin, Ireland');const outer=document.createElement('div');const h=document.createElement('div');h.className='popup-title';h.textContent=p.name;const d=document.createElement('div');d.className='popup-sub';d.textContent=(p.kind==='bar'?'Bar':'Pub')+' · '+(p.address||'Dublin 2')+' · '+(isPubInZone(p,currentPhase())?'binnen huidige zone':'buiten huidige zone')+(p.approx?' · locatie bij benadering':'');const a=document.createElement('a');a.className='popup-link';a.href=link;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Open in Google Maps ↗';outer.append(h,d,a);openPub=new maplibregl.Popup({offset:11,maxWidth:'230px'}).setLngLat([p.lng,p.lat]).setDOMContent(outer).addTo(map)}
+async function fetchPubs(){// OpenStreetMap Overpass; curated fallback remains if a public endpoint is unavailable.
+ $('mapBadgeSub').textContent=`${pubs.length} pubs & bars op de kaart · live controle...`;
+ const bbox='53.3307,-6.2735,53.346,-6.2572';const query=`[out:json][timeout:16];(node["amenity"~"^(pub|bar|biergarten)$"](${bbox});way["amenity"~"^(pub|bar|biergarten)$"](${bbox}););out center;`;
+ const endpoints=['https://overpass-api.de/api/interpreter','https://overpass.private.coffee/api/interpreter','https://overpass.kumi.systems/api/interpreter'];
+ for(const url of endpoints){try{const controller=new AbortController();const limit=setTimeout(()=>controller.abort(),7500);let response;try{response=await fetch(url+'?data='+encodeURIComponent(query),{signal:controller.signal,headers:{'Accept':'application/json'}})}finally{clearTimeout(limit)}if(!response.ok)continue;const data=await response.json();if(!Array.isArray(data.elements))continue;const entries=data.elements.map(x=>({name:x.tags?.name||x.tags?.['name:en']||'Pub / bar',lat:x.lat??x.center?.lat,lng:x.lon??x.center?.lon,kind:x.tags?.amenity==='pub'?'pub':'bar',address:[x.tags?.['addr:street'],x.tags?.['addr:housenumber']].filter(Boolean).join(' ')||'',approx:false})).filter(x=>Number.isFinite(x.lat)&&Number.isFinite(x.lng)&&isPubInBase(x));
+ // Don't duplicate venues that appear both as a pub node and pub building.
+ let merged=[];for(const p of entries){const match=merged.find(q=>q.name.toLowerCase()===p.name.toLowerCase()&&d2(xy([q.lng,q.lat]),xy([p.lng,p.lat]))<55);if(!match)merged.push(p)}
+ for(const p of FALLBACK){if(!merged.some(q=>normalizePub(q.name)===normalizePub(p.name)&&d2(xy([q.lng,q.lat]),xy([p.lng,p.lat]))<190))merged.push(p)}
+ if(merged.length<13)continue;pubs=merged.sort((a,b)=>a.name.localeCompare(b.name));updatePubSource();$('mapBadgeSub').textContent=`${pubs.length} pubs & bars · inclusief live locaties`;return;
+ }catch(e){console.warn('Pub provider unavailable:',url,e.message)}}pubs=FALLBACK.slice().sort((a,b)=>a.name.localeCompare(b.name));updatePubSource();$('mapBadgeSub').textContent=`${pubs.length} pubs & bars · ingebouwde lijst`;
+}
+function renderPubs(){const term=$('pubSearch').value.trim().toLowerCase(),panel=$('pubItems');panel.replaceChildren();let list=pubs.filter(p=>p.name.toLowerCase().includes(term));const stage=currentPhase();list.sort((a,b)=>Number(isPubInZone(b,stage))-Number(isPubInZone(a,stage))||a.name.localeCompare(b.name));$('pubCount').textContent=`🍺 ${pubs.length} pubs & bars`;
+ for(const p of list){const row=document.createElement('button');row.type='button';row.className='pub-row';const left=document.createElement('div');const name=document.createElement('div');name.className='nm';name.textContent=p.name;const sub=document.createElement('div');sub.className='ct';sub.textContent=(isPubInZone(p,stage)?'● Binnen zone':'○ Buiten zone')+' · '+(p.kind==='pub'?'Pub':'Bar')+(p.address?' · '+p.address:'');left.append(name,sub);const arrow=document.createElement('span');arrow.className='nav';arrow.textContent='↗';row.append(left,arrow);row.onclick=()=>{flyPub(p);$('pubDrawer').classList.remove('open')};panel.appendChild(row)}if(!list.length)panel.textContent='Geen pubs gevonden.'}
+// Cloudflare Durable Object synchronisation: one room = one server-held state.
+let room='',role='',draftRole='',serverState={status:'lobby',revision:-1,start:null,seed:null},serverOffset=0,syncBusy=false,seenNetwork=false,playedCues=new Set();
+function clockNow(){return Date.now()+serverOffset}
+function makeRoom(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',bytes=new Uint8Array(9);crypto.getRandomValues(bytes);return Array.from(bytes,b=>chars[b%chars.length]).join('')}
+function setupRoom(){let url=new URL(location.href);room=(url.searchParams.get('room')||'').toUpperCase();if(!/^[A-Z2-9]{8,12}$/.test(room)){room=makeRoom();url.searchParams.set('room',room);url.hash='';history.replaceState(null,'',url.href)}
+ $('roomInfo').textContent='SPELROOM '+room+' · deel deze link vóór iemand op START drukt.';
+ try{role=localStorage.getItem('duck-role-'+room)||''}catch(e){}
+ renderRole();if(!role)openRoleModal();else $('startPanel').style.display='none';
+}
+function renderRole(){
+ const names={duck:'🦆 DUCK',hunter:'🎯 HUNTER'};$('roleChip').textContent=names[role]||'KIES ROL';$('roleChip').style.display='inline-block';
+ $('roleChip').title='Klik om je rol te veranderen';$('gameEyebrow').textContent=role==='duck'?'🦆 YOU ARE THE DUCK':role==='hunter'?'🎯 YOU ARE THE HUNTER':'MISSION CONTROL';
+}
+function openRoleModal(){draftRole=role;for(const b of document.querySelectorAll('[data-role]'))b.classList.toggle('chosen',b.dataset.role===draftRole);$('roleConfirm').disabled=!draftRole;$('startPanel').style.display='flex'}
+function selectRole(v){draftRole=v;for(const b of document.querySelectorAll('[data-role]'))b.classList.toggle('chosen',b.dataset.role===v);$('roleConfirm').disabled=false}
+function confirmRole(){if(!draftRole)return;role=draftRole;try{localStorage.setItem('duck-role-'+room,role)}catch(e){};renderRole();$('startPanel').style.display='none';connection(seenNetwork);tick();renderPhoto()}
+function connection(ok){seenNetwork=seenNetwork||ok;$('connectionLabel').className='server-state'+(ok?' ok':'');$('connectionLabel').textContent=ok?'● LIVE VERBONDEN · alle telefoons gesynchroniseerd':'● OFFLINE · live start/reset is niet beschikbaar';$('statusRibbon').classList.toggle('show',!ok);$('startSharedBtn').disabled=!ok||serverState.status==='running'||!role;$('resetSharedBtn').disabled=!ok||serverState.status==='lobby'}
+function applyState(data){if(!['running','lobby'].includes(data.status)||!Number.isInteger(data.revision))throw Error('Ongeldige servergegevens');
+ const firstSync=serverState.revision<0;
+ const changed=serverState.revision!==data.revision||serverState.status!==data.status;
+ serverState={status:data.status,revision:data.revision,seed:data.seed,start:data.start};
+ if(changed){lastPhase=-1;lastStageStamp='';playedCues.clear();window.__gpsCentered=false;
+   if(data.status==='running'){game={seed:data.seed>>>0,start:data.start};zones=deriveZones(game.seed);if(!firstSync)showToast('🦆 Spel gestart! Nieuwe willekeurige zones.');}
+   else{game=null;zones=deriveZones(43909);$('photoOverlay').classList.remove('show');if(!firstSync)showToast('↺ De hele spelkamer is gereset. Iedereen kan opnieuw starten.');}
+   refreshMap();renderPubs();fitBase();}
+ connection(true);tick();renderPhoto();
+}
+async function api(path,method='GET'){
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),9000);
+ try{const response=await fetch(path+'?room='+encodeURIComponent(room),{method,cache:'no-store',signal:controller.signal,headers:{'Accept':'application/json'}});const data=await response.json();if(!response.ok){if(response.status===409){applyState(data);throw Error(data.message||'Spel al gestart')}throw Error(data.error||'Serverfout '+response.status)}return data}
+ finally{clearTimeout(timer)}
+}
+async function syncState(){if(syncBusy)return;syncBusy=true;const before=Date.now();try{const data=await api('/api/game');serverOffset=data.serverTime-(before+Date.now())/2;applyState(data)}catch(e){console.warn('Could not synchronise:',e);connection(false)}finally{syncBusy=false}}
+async function changeGame(action){if(!role){openRoleModal();return}if(!seenNetwork){showToast('Geen serververbinding. Controleer je Workers-link.');return}
+ if(action==='reset'&&game&&!confirm('RESET voor ALLE spelers? De timer en zones worden opnieuw ingesteld.'))return;
+ $('startSharedBtn').disabled=true;$('resetSharedBtn').disabled=true;
+ try{const before=Date.now(),data=await api('/api/game/'+action,'POST');serverOffset=data.serverTime-(before+Date.now())/2;applyState(data)}catch(e){showToast(e.message||'Kon het spel niet aanpassen.');await syncState()}
+}
+async function shareLink(){const url=new URL(location.href);url.hash='';url.searchParams.set('room',room);
+ const share={title:'Duck Hunt Dublin · Game Room '+room,text:'🦆 Doe mee met Duck Hunt Dublin. Kies DUCK of HUNTER en wacht op de gezamenlijke start.',url:url.href};
+ try{if(navigator.share){await navigator.share(share);return}}catch(e){if(e.name==='AbortError')return}
+ try{await navigator.clipboard.writeText(url.href);showToast('Spellink gekopieerd. Stuur hem via WhatsApp!')}catch(e){window.prompt('Kopieer deze volledige link:',url.href)}
+}
+function renderPhoto(){const el=$('photoOverlay');if(!role||role!=='duck'||!game){el.classList.remove('show');return}
+ const mins=(clockNow()-game.start)/60000;
+ const due=[{at:30,id:'1',text:'Foto-opdracht 1: maak samen een foto van jullie schuilplek en stuur hem via WhatsApp naar de jagers. Vermijd een exacte locatie.'},{at:70,id:'2',text:'Foto-opdracht 2: stuur opnieuw een foto van jullie huidige pub of omgeving naar de jagers via WhatsApp. Geen exacte GPS nodig.'}].filter(x=>mins>=x.at);
+ const pending=due.find(x=>{try{return localStorage.getItem('duck-photo-'+room+'-'+serverState.revision+'-'+x.id)!=='dismissed'}catch(e){return true}});
+ if(!pending){el.classList.remove('show');return}
+ $('photoTitle').textContent='📸 FOTOCHALLENGE '+pending.id+' · DUCKS';$('photoText').textContent=pending.text;
+ el.dataset.photo=pending.id;if(!el.classList.contains('show'))notifyOnce('photo-'+serverState.revision+'-'+pending.id,'alert');el.classList.add('show');
+}
+function dismissPhoto(){const id=$('photoOverlay').dataset.photo;try{localStorage.setItem('duck-photo-'+room+'-'+serverState.revision+'-'+id,'dismissed')}catch(e){}$('photoOverlay').classList.remove('show');renderPhoto()}
+function showToast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3300)}
+function sound(type='beep'){if(!audioEnabled||!audioContext)return;try{const now=audioContext.currentTime;const notes=type==='alert'?[660,880,660]:[520,680];notes.forEach((f,i)=>{const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.value=f;gain.gain.setValueAtTime(.0001,now+i*.19);gain.gain.exponentialRampToValueAtTime(.085,now+i*.19+.018);gain.gain.exponentialRampToValueAtTime(.0001,now+i*.19+.16);osc.connect(gain).connect(audioContext.destination);osc.start(now+i*.19);osc.stop(now+i*.19+.17)})}catch(e){console.warn(e)}}
+function activateAudio(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C){showToast('Dit apparaat ondersteunt geen geluid.');return}audioContext??=new C();audioContext.resume();audioEnabled=true;$('audioBtn').textContent='♫ Geluid staat aan';$('audioBtn').className='btn secondary';sound();showToast('Geluid aan. Houd de website open voor meldingen.')}catch(e){showToast('Geluid kon niet ingeschakeld worden.')}}
+function startLocation(){if(!navigator.geolocation){showToast('Locatie is niet beschikbaar op dit apparaat.');return}if(!window.isSecureContext){showToast('Locatie werkt pas op een HTTPS-link. Publiceer de site eerst.');return}if(geoWatch!==null){if(currentLocation)map.flyTo({center:[currentLocation.lng,currentLocation.lat],zoom:16,essential:true});return}
+ $('locateBtn').classList.add('on');geoWatch=navigator.geolocation.watchPosition(pos=>{const p={lat:pos.coords.latitude,lng:pos.coords.longitude,accuracy:pos.coords.accuracy};currentLocation=p;if(!currentMarker){const el=document.createElement('div');el.className='gps-pulse';currentMarker=new maplibregl.Marker({element:el,anchor:'center'}).setLngLat([p.lng,p.lat]).addTo(map)}else currentMarker.setLngLat([p.lng,p.lat]);const ac= Math.max(1,p.accuracy);const ring={type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'Polygon',coordinates:[[...circle(xy([p.lng,p.lat]),ac).map(ll),ll(circle(xy([p.lng,p.lat]),ac)[0])]]},properties:{}}]};if(mapReady){if(!map.getSource('gps-accuracy')){map.addSource('gps-accuracy',{type:'geojson',data:ring});map.addLayer({id:'gps-accuracy',type:'fill',source:'gps-accuracy',paint:{'fill-color':'#468bee','fill-opacity':.12}},'pub-shadows');}else map.getSource('gps-accuracy').setData(ring)}const stage=currentPhase();$('mapBadgeTitle').textContent=isPubInZone(p,stage)?'✓ JE BENT IN DE SPEELZONE':'⚠ BUITEN DE SPEELZONE';if(!window.__gpsCentered){map.flyTo({center:[p.lng,p.lat],zoom:16,essential:true});window.__gpsCentered=true}
+ },error=>{geoWatch=null;$('locateBtn').classList.remove('on');showToast(error.code===1?'Geef Safari toegang tot je locatie.':'Kon je locatie niet bepalen.');},{enableHighAccuracy:true,maximumAge:5000,timeout:16000})}
+function notifyOnce(key,type='beep'){if(!playedCues.has(key)){playedCues.add(key);sound(type)}}
+function tick(){
+ const now=clockNow(),elapsed=game?(now-game.start)/60000:-1,stage=currentPhase(now),phaseElapsed=game?Math.max(0,elapsed-stage*20):0;
+ const status=$('livePill'),title=$('sideTitle'),timerLabel=$('timerLabel'),time=$('mainTimer'),chip=$('roundChip');let notice=null;
+ if(!game){status.textContent='◷ WACHTKAMER';title.textContent='Ready for the hunt?';timerLabel.textContent='SPELDUUR';time.textContent='120:00';chip.textContent='6 ZONES';$('nextTime').textContent='—';notice={kind:'green',html:'<strong>🦆 Klaar om te spelen?</strong> Deel de spellink met alle spelers. Iedereen mag daarna op START drukken. Het spel begint voor iedereen tegelijk.'};}
+ else if(elapsed>=120){status.textContent='■ GAME OVER';title.textContent='Game over.';timerLabel.textContent='SPEL AFGELOPEN';time.textContent='00:00';$('nextTime').textContent='—';chip.textContent='FINISH';notice={kind:'green',html:'<strong>🏆 De eenden winnen!</strong> Twee uur voorbij. Klik op RESET om met iedereen een volledig nieuw spel met andere zones te beginnen.'};notifyOnce('finish','alert')}
+ else {const waiting=elapsed<10;status.textContent=waiting?'◷ EENDENVOORSPRONG':'● GAME LIVE';chip.textContent='ZONE '+(stage+1)+' / 6';title.textContent=waiting?'Run, ducks, run.':stage===5?'FINAL HUNT.':'Stay out of sight.';timerLabel.textContent=stage===5?'TIJD TOT EINDE':'TIJD TOT VOLGENDE ZONE';time.textContent=msToTimer((stage===5?120-elapsed:20-phaseElapsed)*60000);$('nextTime').textContent=stage<5?formatClock(game.start+(stage+1)*20*60000):'FINISH';
+ if(waiting){notice={kind:'green',html:'<strong>🦆 De eenden zijn vertrokken!</strong> Jagers wachten nog '+msToTimer((10-elapsed)*60000)+' bij het startpunt.'}}
+ else if(elapsed>=115){notice={kind:'red',html:'<strong>🔥 LAATSTE 5 MINUTEN!</strong> De laatste zone heeft een straal van 150 meter.'}}
+ else if(phaseElapsed>=15&&stage<5){notice={kind:'red',html:'<strong>⚠ VOLGENDE ZONE BEKEND!</strong> De oranje stippellijn toont de nieuwe grens, actief over '+msToTimer((20-phaseElapsed)*60000)+'. Ga veilig die kant op.'}}
+ else if(stage===5){notice={kind:'red',html:'<strong>🔥 FINAL ZONE!</strong> De laatste zone is 150 meter. Nog '+msToTimer((120-elapsed)*60000)+' tot de finish.'}}
+ else{notice={kind:'dark',html:'<strong>🍺 Duck Hunt is live.</strong> Over '+msToTimer((15-phaseElapsed)*60000)+' verschijnt de volgende, willekeurige zone. Eenden ontvangen hun foto-opdrachten afzonderlijk.'}}
+ if(elapsed>=10)notifyOnce('hunt-start','alert');if(stage!==lastPhase){if(lastPhase>=0)notifyOnce('zone-'+stage,'alert');lastPhase=stage;refreshMap();renderPubs()}if(stage<5&&phaseElapsed>=15)notifyOnce('warning-'+stage,'alert');
+ }
+ $('zoneSize').textContent=stage===0?'Startgebied':RADII[stage]+' m';$('phaseStart').textContent=game?formatClock(game.start)+' · START':'WACHT OP START';$('phaseList').innerHTML=Array.from({length:6},(_,i)=>`<span class="phase-dot ${game&&i<stage?'done':game&&i===stage?'active':''}"></span>`).join('');
+ $('noticeBox').className='notice foldable '+(notice.kind==='orange'?'':notice.kind);$('noticeBox').innerHTML=notice.html;
+ const key=(!game?'lobby':stage+':'+(stage<5&&phaseElapsed>=15?'next':'current'));
+ if(key!==lastStageStamp){lastStageStamp=key;refreshMap()}
+ if(game)renderPhoto();
+}
+$('startSharedBtn').addEventListener('click',()=>changeGame('start'));
+$('resetSharedBtn').addEventListener('click',()=>changeGame('reset'));
+$('quickShareBtn').addEventListener('click',shareLink);
+$('shareBtn').addEventListener('click',shareLink);
+$('roleChip').addEventListener('click',openRoleModal);
+for(const b of document.querySelectorAll('[data-role]'))b.addEventListener('click',()=>selectRole(b.dataset.role));
+$('roleConfirm').addEventListener('click',confirmRole);
+$('photoDismissBtn').addEventListener('click',dismissPhoto);
+$('audioBtn').addEventListener('click',activateAudio);
+$('locateBtn').addEventListener('click',startLocation);
+$('fitBtn').addEventListener('click',fitBase);
+$('pubsBtn').addEventListener('click',()=>{$('pubDrawer').classList.toggle('open');renderPubs()});
+$('listBtn').addEventListener('click',()=>{$('pubDrawer').classList.toggle('open');renderPubs()});
+$('closePubs').addEventListener('click',()=>$('pubDrawer').classList.remove('open'));
+$('pubSearch').addEventListener('input',renderPubs);
+function flipDetails(){const s=$('sidebar');s.classList.toggle('folded');$('detailsBtn').textContent=s.classList.contains('folded')?'▲ Alle spelinfo':'▼ Terug naar kaart';setTimeout(()=>map?.resize(),250)}
+$('mobileHandle').addEventListener('click',flipDetails);$('detailsBtn').addEventListener('click',flipDetails);
+window.addEventListener('pageshow',()=>{syncState();map?.resize()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){syncState();tick()}});
+window.addEventListener('resize',()=>map?.resize());
+setupRoom();initMap();fetchPubs();zones=deriveZones(43909);
+if(window.innerWidth<=700)$('sidebar').classList.add('folded');
+tick();syncState();setInterval(()=>{if(!document.hidden)syncState()},2500);setInterval(tick,1000);
+</script>
+</body>
+</html>
