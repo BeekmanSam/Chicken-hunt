@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#14251f">
-<meta name="description" content="Duck Hunt Dublin — live pub hunt rondom Camden Street en Dame Lane, 7 november 2026.">
-<title>Duck Hunt Dublin | 7 November 2026</title>
+<meta name="description" content="Chicken Hunt Dublin — live pub hunt rondom Camden Street en Dame Lane, 7 november 2026.">
+<title>Chicken Hunt Dublin | 7 November 2026</title>
 <link rel="preconnect" href="https://tiles.openfreemap.org">
 <link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
 <style>
@@ -42,7 +42,7 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
 #detailsBtn{display:none}
 @media(max-width:700px){
   #app{min-height:0}.top-right{gap:7px}.live-pill{font-size:9px;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.role-pill{font-size:10px;padding:7px}
-  .sidebar{max-height:94%;border-radius:17px 17px 0 0}.sidebar.folded{max-height:none;height:228px;overflow:hidden}.sidebar:not(.folded){height:calc(100dvh - 62px);max-height:none;overflow-y:auto}
+  .sidebar{max-height:94%;border-radius:17px 17px 0 0}.sidebar.folded{max-height:none;height:277px;overflow:hidden}.sidebar:not(.folded){height:calc(100dvh - 62px);max-height:none;overflow-y:auto}
   .side-content{padding:10px 15px calc(20px + var(--safe));gap:9px}
   .sidebar.folded .side-content{height:calc(100% - 10px);overflow:hidden}
   .sidebar.folded .game-intro,.sidebar.folded .foldable:not(.timerblock){display:none}
@@ -55,58 +55,77 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
   .control-strip .btn{padding:10px 5px;font-size:11px;border-radius:9px}
   .sidebar.folded #roomInfo,.sidebar.folded .server-state{display:none}
   .map-controls{top:69px;right:10px}.map-badge{top:12px;max-width:calc(100% - 85px)}.map-badge .bsub{font-size:9px}
-  .legend{bottom:calc(236px + var(--safe));padding:6px 8px;gap:4px;min-width:0}.legend-item{font-size:9px}
-  .pub-drawer{bottom:calc(240px + var(--safe));max-height:48%}.maplibregl-ctrl-bottom-right{bottom:240px!important}
+  .legend{bottom:calc(284px + var(--safe));padding:6px 8px;gap:4px;min-width:0}.legend-item{font-size:9px}
+  .pub-drawer{bottom:calc(288px + var(--safe));max-height:48%}.maplibregl-ctrl-bottom-right{bottom:288px!important}
   .photo-overlay{top:160px;width:calc(100% - 18px);padding:13px 14px}
   .start-panel{padding:10px;align-items:center}.start-modal{padding:20px;width:min(430px,100%)}.start-modal h2{font-size:24px}
   .role-option{padding:14px 9px}.role-option .emoji{font-size:32px}
 }
-@media(max-width:700px) and (max-height:650px){.sidebar.folded{height:200px}.sidebar.folded .statline{display:none!important}.photo-overlay{top:100px}}
+@media(max-width:700px) and (max-height:650px){.sidebar.folded{height:257px}.sidebar.folded .statline{display:none!important}.photo-overlay{top:100px}}
 
+
+/* V6 · live challenge countdowns and powers. On-screen actions are server recorded; photos stay in WhatsApp. */
+.power-panel{position:absolute;z-index:6;right:82px;top:20px;width:min(365px,calc(100% - 110px));max-height:67%;overflow:auto;display:none;background:#fffcf7;border:1px solid #dce7dc;border-radius:17px;box-shadow:0 15px 46px #0e201b56;padding:13px}
+.power-panel.open{display:block}.power-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px}.power-head strong{font-size:15px}.power-card{border:1px solid #e3e9df;background:white;border-radius:12px;padding:11px;margin-top:9px}.power-card strong{display:block;font-size:13px;margin-bottom:6px}.power-card p{font-size:11px;line-height:1.5;color:#53685a;margin:0 0 10px}.power-card .tag{font-size:10px;font-weight:800;color:#287451}.power-card button{border:0;background:#1a6245;color:#fff;border-radius:9px;padding:10px;width:100%;font-size:12px;font-weight:900}.power-card button.danger{background:#9b3432}.power-card button:disabled{background:#a4aea6}.power-card .tag:empty{display:none}
+.game-alert{display:none;position:absolute;z-index:9;top:90px;left:50%;transform:translateX(-50%);width:min(460px,calc(100% - 24px));background:#fffaf1;border:2px solid #e3b458;border-radius:20px;padding:18px;box-shadow:0 21px 65px #111d15a6}
+.game-alert.show{display:block}.game-alert h3{font-size:20px;line-height:1.1;letter-spacing:-.04em;margin:0 0 10px}.game-alert p{font-size:13px;line-height:1.52;color:#5d5849;margin:0 0 11px}.game-alert-actions{display:grid;gap:8px}.game-alert .btn{padding:12px}.game-alert .plain{background:#f0ede4}.game-alert .red{background:#9b3432;color:#fff}.game-alert .smallprint{font-size:10px;color:#7b7668;margin-top:11px}.challenge-countdown{font-variant-numeric:tabular-nums;font-size:35px;font-weight:900;text-align:center;letter-spacing:-.04em;color:#a35218;margin:10px 0;padding:11px;border:1px solid #f0deb7;border-radius:12px;background:#fff1d6}.challenge-countdown[hidden]{display:none}.challenge-strip{position:absolute;z-index:7;top:15px;left:50%;transform:translateX(-50%);display:none;align-items:center;gap:10px;border-radius:14px;padding:9px 12px;background:#fff6de;border:1px solid #e8ad42;box-shadow:0 6px 24px #11221c3d;font-size:12px;font-weight:800;white-space:nowrap;max-width:calc(100% - 95px)}.challenge-strip.show{display:flex}.challenge-strip b{font-variant-numeric:tabular-nums;color:#a35218}.challenge-strip button{background:#1a6245;border:0;border-radius:7px;color:white;padding:7px 9px;font-weight:800;font-size:10px}.challenge-countdown small{display:block;font-size:10px;letter-spacing:.08em;color:#805f30;margin-bottom:3px}
+#powerBtn{background:#f4b346;color:#30250d}.power-live{font-size:11px;font-weight:900;color:#a03530}.power-live:empty{display:none}
+@media(max-width:700px){.power-panel{right:12px;top:69px;width:min(360px,calc(100% - 24px));max-height:55%}.game-alert{top:12px;padding:15px}.challenge-strip{top:68px;left:12px;right:67px;transform:none;max-width:none;white-space:normal}.game-alert h3{font-size:18px}}
+
+/* V6: Dedicated team action is always visible even in the compact map view. */
+#roleQuickBtn{padding:11px 10px;margin-top:7px;background:#b04b2b;color:#fff;font-weight:900;letter-spacing:.015em;display:flex;line-height:1.25;min-height:39px}
+#roleQuickBtn.chicken-button{background:#a23033;color:white}
+#roleQuickBtn.hunter-button{background:#245e48;color:white}
+#roleQuickBtn:disabled{opacity:.65}
+@media(max-width:700px){#roleQuickBtn{padding:9px 8px;font-size:12px;min-height:36px;margin-top:6px}}
 </style>
 </head>
 <body>
 <div id="app">
 <header>
-  <div class="brand"><div class="ducky">🦆</div><div><div class="brand-title">DUCK HUNT <span style="color:#f3b64d">DUBLIN</span></div><div class="brand-sub">2 DUCKS · 2 HUNTERS · 2026</div></div></div>
+  <div class="brand"><div class="ducky">🐔</div><div><div class="brand-title">CHICKEN HUNT <span style="color:#f3b64d">DUBLIN</span></div><div class="brand-sub">2 CHICKENS · 2 HUNTERS · LIVE V6</div></div></div>
   <div class="top-right"><span class="top-date">SAT 7 NOV · FROM 17:00</span><button class="role-pill" id="roleChip" title="Wijzig je rol" style="display:none">ROL</button><span class="live-pill" id="livePill">● LOBBY</span></div>
 </header>
 <div id="statusRibbon" role="alert">Geen verbinding met de spelsynchronisatie. Gebruik de nieuwe Cloudflare Workers-link, niet de oude Pages-link.</div>
 <main>
   <aside class="sidebar" id="sidebar"><div class="mobile-handle" id="mobileHandle" role="button" tabindex="0" aria-label="Open of sluit spelinformatie"></div><div class="side-content">
-    <section class="game-intro"><div class="splithead"><span class="eyebrow" id="gameEyebrow">MISSION CONTROL</span><span class="small-chip orange" id="roundChip">6 ZONES</span></div><h1 class="h1" id="sideTitle">Run, duck, run.</h1><p class="deck" id="sideDeck">Twee eenden. Twee jagers. Eén stad. Zoek elkaar in de pubs van Dublin voordat de speelzone dichtklapt.</p></section>
+    <section class="game-intro"><div class="splithead"><span class="eyebrow" id="gameEyebrow">MISSION CONTROL</span><span class="small-chip orange" id="roundChip">6 ZONES</span></div><h1 class="h1" id="sideTitle">Run, chicken, run.</h1><p class="deck" id="sideDeck">Twee chickens. Twee jagers. Eén stad. Zoek elkaar in de pubs van Dublin voordat de speelzone dichtklapt.</p></section>
     <section class="foldable timerblock"><div class="time-label" id="timerLabel">START OVER</div><div class="hero-time" id="mainTimer">--:--</div><div class="statline" style="margin-top:12px"><div class="stat"><span>VOLGENDE ZONE</span><strong id="nextTime">17:20</strong></div><div class="stat"><span>HUIDIGE ZONE</span><strong id="zoneSize">Startgebied</strong></div></div></section>
 
     <section class="control-wrap"><div class="control-strip">
       <button class="btn gold" id="startSharedBtn" disabled>▶ START</button>
       <button class="btn" id="resetSharedBtn" disabled>↺ RESET</button>
       <button class="btn secondary" id="quickShareBtn">↗ DEEL</button>
-    </div><button id="detailsBtn">▲ Alle spelinfo</button>
+    </div><button type="button" class="btn quick-action" id="roleQuickBtn" style="display:none" disabled>Actie laden…</button><button id="detailsBtn">▲ Alle spelinfo</button>
     <div id="roomInfo">SPELROOM WORDT GELADEN…</div><div class="server-state" id="connectionLabel">Verbinden met live spel…</div></section>
-    <section class="panel foldable"><div class="splithead"><h3>ZONE PROGRESSION</h3><span class="session-id" id="sessionId">SYNCHRONISED</span></div><div class="phase-list" id="phaseList"></div><div class="phase-meta"><span id="phaseStart">17:00 · START</span><span>120 MIN · FINISH</span></div><p class="hint" style="margin-bottom:0">Iedere 20 minuten krimpt het gebied. De volgende zone verschijnt 5 minuten eerder.</p></section>
-    <div class="notice green foldable" id="noticeBox"><strong>🦆 Eerste 10 minuten:</strong> de eenden vertrekken, terwijl de jagers blijven wachten op de startlocatie.</div>
-    <div class="btn-group foldable"><button class="btn gold" id="shareBtn">↗ Deel de spellink</button><button class="btn plain" id="audioBtn">♪ Geluid aanzetten</button><button class="btn secondary" id="pubsBtn">🍺 Bekijk alle pubs</button></div>
-    <section class="panel foldable"><h3>DE REGELS</h3><ul class="rules"><li>De eenden blijven samen; de jagers ook.</li><li>De eenden mogen pubs in en uit.</li><li>Jagers die een pub doorzoeken, bestellen volgens jullie afspraak een alcoholische versnapering. Drink met mate; niemand hoeft alcohol te drinken.</li><li>De jagers winnen zodra ze beide eenden fysiek vinden.</li><li>Blijven de eenden na twee uur ongezien? Dan winnen de eenden.</li><li>Spelers houden zich eerlijk aan de actieve zone. Publieke, veilige routes blijven leidend.</li></ul></section>
-    <p class="hint foldable">GPS is alleen zichtbaar op jouw eigen iPhone en wordt niet verstuurd. De gedeelde server bewaart alleen de starttijd en willekeurige zones, geen spelerslocaties. Iedere start krijgt nieuwe random zones. Laat je telefoon ontgrendeld om live geluidssignalen te horen.</p>
+    <div class="power-live" id="powerStatus" aria-live="polite"></div>
+    <section class="panel foldable"><div class="splithead"><h3>ZONE PROGRESSION</h3><span class="session-id" id="sessionId">V6 · LIVE</span></div><div class="phase-list" id="phaseList"></div><div class="phase-meta"><span id="phaseStart">17:00 · START</span><span>120 MIN · FINISH</span></div><p class="hint" style="margin-bottom:0">Iedere 20 minuten krimpt het gebied. De volgende zone verschijnt 5 minuten eerder.</p></section>
+    <div class="notice green foldable" id="noticeBox"><strong>🐔 Eerste 10 minuten:</strong> de chickens vertrekken, terwijl de jagers blijven wachten op de startlocatie.</div>
+    <div class="btn-group foldable"><button class="btn secondary" id="sidebarPowers">⚡ Open power-ups</button><button class="btn gold" id="shareBtn">↗ Deel de spellink</button><button class="btn plain" id="audioBtn">♪ Geluid aanzetten</button><button class="btn secondary" id="pubsBtn">🍺 Bekijk alle pubs</button></div>
+    <section class="panel foldable"><h3>DE REGELS</h3><ul class="rules"><li>De chickens blijven samen; de jagers ook.</li><li>De chickens mogen pubs in en uit.</li><li>Jagers die een pub doorzoeken, bestellen volgens jullie afspraak een alcoholische versnapering. Drink met mate; niemand hoeft alcohol te drinken.</li><li>De jagers winnen zodra ze beide chickens fysiek vinden.</li><li>Blijven de chickens na twee uur ongezien? Dan winnen de chickens.</li><li>Spelers houden zich eerlijk aan de actieve zone. Publieke, veilige routes blijven leidend.</li></ul></section>
+    <p class="hint foldable">GPS is alleen zichtbaar op jouw eigen iPhone en wordt niet verstuurd. De gedeelde server bewaart speltijden, zones en geactiveerde power-ups, maar geen spelerslocaties, telefoonnummers of foto’s. Iedere start krijgt nieuwe random zones. Laat je telefoon ontgrendeld om live geluidssignalen te horen.</p>
   </div></aside>
-  <div class="map-area"><div id="map" class="map" role="application" aria-label="Interactieve Duck Hunt kaart van Dublin"></div>
-    <div class="map-badge"><i></i><div><div class="btitle" id="mapBadgeTitle">DUCK HUNT TERRITORY</div><div class="bsub" id="mapBadgeSub">Dame Lane → Camden Street</div></div></div>
-    <div class="map-controls"><button class="round-button" id="locateBtn" aria-label="Toon mijn locatie" title="Mijn locatie">◎</button><button class="round-button" id="fitBtn" aria-label="Centreer speelgebied" title="Toon gebied">▢</button><button class="round-button" id="listBtn" aria-label="Bekijk alle pubs" title="Pubs">🍺</button></div>
+  <div class="map-area"><div id="map" class="map" role="application" aria-label="Interactieve Chicken Hunt kaart van Dublin"></div>
+    <div class="map-badge"><i></i><div><div class="btitle" id="mapBadgeTitle">CHICKEN HUNT TERRITORY</div><div class="bsub" id="mapBadgeSub">Dame Lane → Camden Street</div></div></div>
+    <div class="map-controls"><button class="round-button" id="locateBtn" aria-label="Toon mijn locatie" title="Mijn locatie">◎</button><button class="round-button" id="fitBtn" aria-label="Centreer speelgebied" title="Toon gebied">▢</button><button class="round-button" id="listBtn" aria-label="Bekijk alle pubs" title="Pubs">🍺</button><button class="round-button" id="powerBtn" aria-label="Open power-ups" title="Power-ups">⚡</button></div>
     <div class="legend"><div class="legend-item"><span class="swatch"></span>Actieve speelzone</div><div class="legend-item"><span class="swatch preview"></span>Volgende zone</div><div class="legend-item"><span class="swatch pub"></span>Pub / bar</div><div class="legend-item"><span class="swatch you"></span>Jouw locatie</div></div>
     <div class="pub-drawer" id="pubDrawer"><div class="pub-head"><h3 id="pubCount">🍺 Pubs in het spel</h3><button class="tiny" id="closePubs">SLUIT ×</button></div><input id="pubSearch" class="pub-search" placeholder="Zoek een pub..." autocomplete="off"><div class="pub-items" id="pubItems"></div></div>
+    <section class="power-panel" id="powerPanel" aria-label="Power-ups en challenges"><div class="power-head"><strong>⚡ LIVE POWER-UPS</strong><button class="tiny" id="closePowers">SLUIT ×</button></div><div id="powersContent"></div><p class="hint">Bewijs van challenges gaat via WhatsApp; de app synchroniseert de beloning. De teams bevestigen eerlijk.</p></section>
+    <div class="challenge-strip" id="challengeStrip"><span id="challengeStripLabel">CHALLENGE</span><b id="challengeStripTime">05:00</b><button id="challengeStripOpen">OPEN</button></div>
+    <div class="game-alert" id="gameAlert" role="alertdialog" aria-live="assertive"><h3 id="alertTitle">LIVE EVENT</h3><p id="alertBody"></p><div class="challenge-countdown" id="alertCountdown" hidden><small>CHALLENGE TIJD OVER</small><span id="alertClock">05:00</span></div><div id="alertActions" class="game-alert-actions"></div><div class="smallprint" id="alertFoot"></div></div>
     <div class="photo-overlay" id="photoOverlay" role="alertdialog" aria-live="assertive" aria-label="Foto opdracht"><strong id="photoTitle">📸 FOTOCHALLENGE</strong><p id="photoText">Maak samen een foto.</p><button id="photoDismissBtn">✓ Begrepen, sluit melding</button></div>
     <div class="bottom-toast" id="toast" role="status"></div>
   </div>
 </main>
   <div class="start-panel" id="startPanel">
     <div class="start-modal">
-      <div class="modal-icon">🦆</div>
+      <div class="modal-icon">🐔</div>
       <div class="eyebrow" style="margin-top:17px">WELCOME TO THE HUNT</div>
       <h2>Wat is jouw rol?</h2>
-      <p>Kies eerst je team. Daarna kom je in dezelfde wachtkamer als je vrienden. Iedereen kan het spel starten of resetten.</p>
+      <p>Kies eerst je team. Daarna kom je in dezelfde wachtkamer als je vrienden. Iedereen kan het spel starten of resetten. Power-ups worden live gedeeld.</p>
       <div class="role-options">
-        <button class="role-option" type="button" data-role="duck"><span class="emoji">🦆</span><span>DUCK</span><small>Verstop je en ontvang foto-opdrachten</small></button>
-        <button class="role-option" type="button" data-role="hunter"><span class="emoji">🎯</span><span>HUNTER</span><small>Zoek de eenden in de pubs</small></button>
+        <button class="role-option" type="button" data-role="chicken"><span class="emoji">🐔</span><span>CHICKEN</span><small>Verstop je en drop de Jägerbomb</small></button>
+        <button class="role-option" type="button" data-role="hunter"><span class="emoji">🎯</span><span>HUNTER</span><small>Scoor hints en meld een vangst</small></button>
       </div>
       <button class="btn primary" id="roleConfirm" disabled>Ga naar de lobby →</button>
       <p class="share-hint">📱 Eén persoon deelt de <strong>volledige spellink</strong> via WhatsApp. Iedereen die dezelfde link opent, zit in hetzelfde spel.</p>
@@ -118,7 +137,7 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 'use strict';
-// DUCK HUNT DUBLIN v3 — one shared Cloudflare room; deterministic seeded zones.
+// CHICKEN HUNT DUBLIN v6 — one shared Cloudflare room; deterministic seeded zones.
 const RULES={duration:120,headstart:10,zones:6,step:20,warning:5,scheduleUTC:Date.UTC(2026,10,7,17,0,0)};
 // Dublin is UTC+0 on 7 November 2026; 17:00 Dublin = 17:00 UTC.
 const REF=[-6.265,53.3383], METERS_X=66300, METERS_Y=111200;
@@ -286,57 +305,229 @@ async function fetchPubs(){// OpenStreetMap Overpass; curated fallback remains i
 function renderPubs(){const term=$('pubSearch').value.trim().toLowerCase(),panel=$('pubItems');panel.replaceChildren();let list=pubs.filter(p=>p.name.toLowerCase().includes(term));const stage=currentPhase();list.sort((a,b)=>Number(isPubInZone(b,stage))-Number(isPubInZone(a,stage))||a.name.localeCompare(b.name));$('pubCount').textContent=`🍺 ${pubs.length} pubs & bars`;
  for(const p of list){const row=document.createElement('button');row.type='button';row.className='pub-row';const left=document.createElement('div');const name=document.createElement('div');name.className='nm';name.textContent=p.name;const sub=document.createElement('div');sub.className='ct';sub.textContent=(isPubInZone(p,stage)?'● Binnen zone':'○ Buiten zone')+' · '+(p.kind==='pub'?'Pub':'Bar')+(p.address?' · '+p.address:'');left.append(name,sub);const arrow=document.createElement('span');arrow.className='nav';arrow.textContent='↗';row.append(left,arrow);row.onclick=()=>{flyPub(p);$('pubDrawer').classList.remove('open')};panel.appendChild(row)}if(!list.length)panel.textContent='Geen pubs gevonden.'}
 // Cloudflare Durable Object synchronisation: one room = one server-held state.
-let room='',role='',draftRole='',serverState={status:'lobby',revision:-1,start:null,seed:null},serverOffset=0,syncBusy=false,seenNetwork=false,playedCues=new Set();
+let room='',role='',draftRole='',serverState={status:'lobby',revision:-1,start:null,seed:null,powerups:{},challenge:{},duel:{},events:[],eventSeq:0},serverOffset=0,syncBusy=false,seenNetwork=false,playedCues=new Set(),powerBusy=false,lastEventId=0,minimizedChallengeKey="";
 function clockNow(){return Date.now()+serverOffset}
 function makeRoom(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',bytes=new Uint8Array(9);crypto.getRandomValues(bytes);return Array.from(bytes,b=>chars[b%chars.length]).join('')}
 function setupRoom(){let url=new URL(location.href);room=(url.searchParams.get('room')||'').toUpperCase();if(!/^[A-Z2-9]{8,12}$/.test(room)){room=makeRoom();url.searchParams.set('room',room);url.hash='';history.replaceState(null,'',url.href)}
  $('roomInfo').textContent='SPELROOM '+room+' · deel deze link vóór iemand op START drukt.';
- try{role=localStorage.getItem('duck-role-'+room)||''}catch(e){}
- renderRole();if(!role)openRoleModal();else $('startPanel').style.display='none';
+ try{role=localStorage.getItem('chicken-role-'+room)||localStorage.getItem('duck-role-'+room)||'';if(role==='duck')role='chicken'}catch(e){}
+ renderRole();if(!role)openRoleModal();else $('startPanel').style.display='none';renderPowers();
 }
 function renderRole(){
- const names={duck:'🦆 DUCK',hunter:'🎯 HUNTER'};$('roleChip').textContent=names[role]||'KIES ROL';$('roleChip').style.display='inline-block';
- $('roleChip').title='Klik om je rol te veranderen';$('gameEyebrow').textContent=role==='duck'?'🦆 YOU ARE THE DUCK':role==='hunter'?'🎯 YOU ARE THE HUNTER':'MISSION CONTROL';
+ const names={chicken:'🐔 CHICKEN',hunter:'🎯 HUNTER'};$('roleChip').textContent=names[role]||'KIES ROL';$('roleChip').style.display='inline-block';
+ $('roleChip').title='Klik om je rol te veranderen';$('gameEyebrow').textContent=role==='chicken'?'🐔 YOU ARE THE CHICKEN':role==='hunter'?'🎯 YOU ARE THE HUNTER':'MISSION CONTROL';
 }
 function openRoleModal(){draftRole=role;for(const b of document.querySelectorAll('[data-role]'))b.classList.toggle('chosen',b.dataset.role===draftRole);$('roleConfirm').disabled=!draftRole;$('startPanel').style.display='flex'}
 function selectRole(v){draftRole=v;for(const b of document.querySelectorAll('[data-role]'))b.classList.toggle('chosen',b.dataset.role===v);$('roleConfirm').disabled=false}
-function confirmRole(){if(!draftRole)return;role=draftRole;try{localStorage.setItem('duck-role-'+room,role)}catch(e){};renderRole();$('startPanel').style.display='none';connection(seenNetwork);tick();renderPhoto()}
-function connection(ok){seenNetwork=seenNetwork||ok;$('connectionLabel').className='server-state'+(ok?' ok':'');$('connectionLabel').textContent=ok?'● LIVE VERBONDEN · alle telefoons gesynchroniseerd':'● OFFLINE · live start/reset is niet beschikbaar';$('statusRibbon').classList.toggle('show',!ok);$('startSharedBtn').disabled=!ok||serverState.status==='running'||!role;$('resetSharedBtn').disabled=!ok||serverState.status==='lobby'}
-function applyState(data){if(!['running','lobby'].includes(data.status)||!Number.isInteger(data.revision))throw Error('Ongeldige servergegevens');
+function confirmRole(){if(!draftRole)return;role=draftRole;try{localStorage.setItem('chicken-role-'+room,role)}catch(e){};renderRole();$('startPanel').style.display='none';connection(seenNetwork);tick();renderPhoto();renderPowers();renderGameAlert()}
+function gameEnded(){return serverState.status==='captured'||serverState.status==='finished'||(serverState.status==='running'&&Number.isFinite(serverState.start)&&clockNow()-serverState.start>=120*60000)}
+function connection(ok){seenNetwork=!!ok;$('connectionLabel').className='server-state'+(ok?' ok':'');$('connectionLabel').textContent=ok?'● LIVE VERBONDEN · alle telefoons gesynchroniseerd':'● OFFLINE · live start/reset is niet beschikbaar';$('statusRibbon').classList.toggle('show',!ok);const ended=gameEnded();$('startSharedBtn').textContent=ended?'↻ OPNIEUW SPELEN':'▶ START';$('startSharedBtn').disabled=!ok||!role||(!ended&&serverState.status!=='lobby');$('resetSharedBtn').disabled=!ok||serverState.status==='lobby';renderPowers()}
+function applyState(data){
+ if(!['running','lobby','captured','finished'].includes(data.status)||!Number.isInteger(data.revision))throw Error('Ongeldige servergegevens');
  const firstSync=serverState.revision<0;
- const changed=serverState.revision!==data.revision||serverState.status!==data.status;
- serverState={status:data.status,revision:data.revision,seed:data.seed,start:data.start};
- if(changed){lastPhase=-1;lastStageStamp='';playedCues.clear();window.__gpsCentered=false;
-   if(data.status==='running'){game={seed:data.seed>>>0,start:data.start};zones=deriveZones(game.seed);if(!firstSync)showToast('🦆 Spel gestart! Nieuwe willekeurige zones.');}
-   else{game=null;zones=deriveZones(43909);$('photoOverlay').classList.remove('show');if(!firstSync)showToast('↺ De hele spelkamer is gereset. Iedereen kan opnieuw starten.');}
-   refreshMap();renderPubs();fitBase();}
- connection(true);tick();renderPhoto();
+ const changed=serverState.revision!==data.revision||serverState.status==='lobby'&&data.status!=='lobby'||data.status==='lobby'&&serverState.status!=='lobby';
+ const oldEvent=serverState.eventSeq||0;
+ serverState={status:data.status,revision:data.revision,seed:data.seed,start:data.start,
+   powerups:data.powerups||{},challenge:data.challenge||{},duel:data.duel||{},eventSeq:data.eventSeq||0,events:data.events||[]};
+ if(changed){minimizedChallengeKey='';lastPhase=-1;lastStageStamp='';playedCues.clear();window.__gpsCentered=false;
+   if(data.status==='running'||data.status==='captured'||data.status==='finished'){
+     game={seed:data.seed>>>0,start:data.start};zones=deriveZones(game.seed);
+     if(!firstSync)showToast('🐔 Gedeelde spelsessie bijgewerkt.');
+   }else{game=null;zones=deriveZones(43909);$('photoOverlay').classList.remove('show');if(!firstSync)showToast('↺ Spel gereset. Alle power-ups opnieuw beschikbaar.');}
+   refreshMap();renderPubs();fitBase();
+ }
+ if(!firstSync&&oldEvent<serverState.eventSeq){sound('alert');showToast('⚡ Nieuwe live gebeurtenis in Chicken Hunt!')}
+ connection(true);tick();renderPhoto();renderPowers();renderGameAlert();
 }
-async function api(path,method='GET'){
+async function api(path,method='GET',body=null){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),9000);
- try{const response=await fetch(path+'?room='+encodeURIComponent(room),{method,cache:'no-store',signal:controller.signal,headers:{'Accept':'application/json'}});const data=await response.json();if(!response.ok){if(response.status===409){applyState(data);throw Error(data.message||'Spel al gestart')}throw Error(data.error||'Serverfout '+response.status)}return data}
+ try{const response=await fetch(path+'?room='+encodeURIComponent(room),{method,cache:'no-store',signal:controller.signal,headers:{'Accept':'application/json','Content-Type':'application/json'},body:body?JSON.stringify(body):undefined});
+ const data=await response.json();if(!response.ok)throw Error(data.error||data.message||'Serverfout '+response.status);return data}
  finally{clearTimeout(timer)}
 }
 async function syncState(){if(syncBusy)return;syncBusy=true;const before=Date.now();try{const data=await api('/api/game');serverOffset=data.serverTime-(before+Date.now())/2;applyState(data)}catch(e){console.warn('Could not synchronise:',e);connection(false)}finally{syncBusy=false}}
 async function changeGame(action){if(!role){openRoleModal();return}if(!seenNetwork){showToast('Geen serververbinding. Controleer je Workers-link.');return}
- if(action==='reset'&&game&&!confirm('RESET voor ALLE spelers? De timer en zones worden opnieuw ingesteld.'))return;
+ if(action==='restart'&&!confirm('NIEUWE RONDE voor ALLE spelers? De zones en power-ups worden opnieuw ingesteld.'))return;
+ if(action==='reset'&&game&&!confirm('RESET voor ALLE spelers? Ook alle power-ups en vangsten worden gewist.'))return;
  $('startSharedBtn').disabled=true;$('resetSharedBtn').disabled=true;
  try{const before=Date.now(),data=await api('/api/game/'+action,'POST');serverOffset=data.serverTime-(before+Date.now())/2;applyState(data)}catch(e){showToast(e.message||'Kon het spel niet aanpassen.');await syncState()}
 }
+async function powerAction(action,winner=null){
+ if(powerBusy||!seenNetwork||!role)return;
+ const warnings={bomb:'Drop jullie ENIGE JÄGERBOMB van deze ronde? Alle jagers moeten onmiddellijk stoppen tot ze allebei voltooid hebben.',disarm:'Hebben BEIDE jagers de Jägerbomb (of een alcoholvrij alternatief) voltooid? Pas dan mogen jullie de jacht hervatten.','challenge-start':'Start de 5-minuten-challenge? Beide teams ontvangen de melding.','challenge-success':'Is de opdracht daadwerkelijk binnen 5 minuten voltooid? Controleer het bewijs via WhatsApp.','challenge-fail':'Geef je de challenge op? Dan krijgen de jagers geen beloning.',catch:'Hebben jullie BEIDE chickens echt gevonden? Dan begint voor iedereen onmiddellijk Split the G.', 'duel-result':'Klopt de uitslag van Split the G? Bevestig JA bij winst jagers en NEE bij winst chickens.'};
+ if(!confirm(warnings[action]||'Power-up bevestigen?'))return;
+ powerBusy=true;renderPowers();
+ try{const before=Date.now(),data=await api('/api/game/action','POST',{action,role,winner,type:(action==='challenge-start'?winner:null)});serverOffset=data.serverTime-(before+Date.now())/2;applyState(data);$('powerPanel').classList.remove('open');}
+ catch(e){showToast(e.message||'Power-up niet gelukt.');await syncState()}
+ finally{powerBusy=false;renderPowers()}
+}
 async function shareLink(){const url=new URL(location.href);url.hash='';url.searchParams.set('room',room);
- const share={title:'Duck Hunt Dublin · Game Room '+room,text:'🦆 Doe mee met Duck Hunt Dublin. Kies DUCK of HUNTER en wacht op de gezamenlijke start.',url:url.href};
+ const share={title:'Chicken Hunt Dublin · Game Room '+room,text:'🐔 Doe mee met Chicken Hunt Dublin. Kies CHICKEN of HUNTER en wacht op de gezamenlijke start.',url:url.href};
  try{if(navigator.share){await navigator.share(share);return}}catch(e){if(e.name==='AbortError')return}
  try{await navigator.clipboard.writeText(url.href);showToast('Spellink gekopieerd. Stuur hem via WhatsApp!')}catch(e){window.prompt('Kopieer deze volledige link:',url.href)}
 }
-function renderPhoto(){const el=$('photoOverlay');if(!role||role!=='duck'||!game){el.classList.remove('show');return}
+function powerButton(label, action, disabled, note, cls=''){
+ return `<button type="button" class="${cls}" data-action="${action}" ${disabled?'disabled':''}>${label}</button>${note?`<p class="tag">${note}</p>`:''}`;
+}
+function renderPowers(){
+ const el=$('powersContent');if(!el)return;
+ if(!role){el.textContent='Kies eerst je rol.';return}
+ const p=serverState.powerups||{},d=serverState.duel||{},c=serverState.challenge||{};
+ const running=serverState.status==='running'&&game&&clockNow()-game.start<7200000;
+ const huntersReleased=running&&clockNow()-game.start>=600000;
+ const disabled=!huntersReleased||!seenNetwork||powerBusy||d.status==='pending';
+ const bombDisabled=!running||!seenNetwork||powerBusy||p.bombUsed;
+ const challengeActive=c.status==='active';
+ let html='';
+ if(role==='chicken'){
+  html=`<div class="power-card"><strong>💣 JÄGERBOMB · 1× PER SPEL</strong><p>Drop een bom op de jagers: zij moeten stoppen en in de pub herladen (Jägerbomb of alcoholvrij alternatief). Een lopende jagerchallenge mislukt.</p>${powerButton(p.bombUsed?'💥 BOM GEBRUIKT':'💣 DROP JÄGERBOMB','bomb',bombDisabled,p.bombActive?'De jagers liggen nog stil.':'')}</div>`;
+  html+=`<div class="power-card"><strong>🐔 HEADLESS CHICKEN · SPLIT THE G</strong><p>Bij vangst: één chicken tegen één jager. Wie de G het best split wint. Chickens winnen = 60 seconden ontsnappen. Guinness 0.0 is toegestaan.</p><span class="tag">${d.used?'Tweede kans is gebruikt.':'Beschikbaar bij eerste vangst.'}</span></div>`;
+  if(challengeActive)html+=`<div class="power-card"><strong>👀 JAGERS-CHALLENGE LIVE</strong><p>${c.type==='honey'?'Ze proberen een Iers telefoonnummer/Instagram te regelen. Bij succes moeten jullie de locatie delen.':'Ze zoeken een McGregor- of Ed Sheeran-lookalike. Bij succes moeten jullie een omgevingsfoto sturen.'}</p><span class="tag">Nog ${msToTimer(Math.max(0,c.deadline-clockNow()))}</span></div>`;
+ }else{
+  if(challengeActive){
+   html=`<div class="power-card"><strong>${c.type==='honey'?'💋 HONEY TRAP':'📸 CELEBRITY HUNTER'} · BEZIG</strong><p>Jullie hebben nog ${msToTimer(Math.max(0,c.deadline-clockNow()))}. Leg het bewijs vast en meld tijdig of het gelukt is. De chickens kijken mee.</p>${powerButton('✓ OPDRACHT GELUKT','challenge-success',disabled||p.bombActive)}${powerButton('✕ NIET GELUKT','challenge-fail',disabled||p.bombActive)}</div>`;
+  }else{
+   html=`<div class="power-card"><strong>💋 HONEY TRAP · 5 MIN</strong><p>Regel vrijwillig het telefoonnummer of Instagram-account van een Ierse. Slaag je binnen 5 minuten? De chickens moeten hun huidige WhatsApp-locatie sturen. Geen gegevens in de app opslaan.</p>${powerButton(p.honeyUsed?'✓ UITGESPEELD':'💋 START HONEY TRAP','challenge-start',disabled||p.bombActive||p.honeyUsed||challengeActive)}</div>`;
+   html+=`<div class="power-card"><strong>🥊 CELEBRITY HUNTER · 5 MIN</strong><p>Maak binnen 5 minuten een foto met een Conor McGregor- of Ed Sheeran-lookalike. Bij succes sturen de chickens een actuele omgevingsfoto.</p>${powerButton(p.celebrityUsed?'✓ UITGESPEELD':'📸 START CELEBRITY HUNTER','challenge-start',disabled||p.bombActive||p.celebrityUsed||challengeActive)}</div>`;
+  }
+  html+=`<div class="power-card"><strong>🐔 CHICKENS GEVONDEN?</strong><p>Hebben jullie beide chickens gevonden? Druk op GEVONDEN. Op beide teams verschijnt direct de Split the G-challenge. Jagers registreren daarna JA of NEE.</p>${powerButton('🐔 CHICKENS GEVONDEN!','catch',disabled||p.bombActive||(d.escapeUntil&&clockNow()<d.escapeUntil))}</div>`;
+  if(p.bombActive)html=`<div class="power-card"><strong>💥 JÄGERBOMB ACTIEF</strong><p>Stop de jacht. Herlaad per jager met Jägerbomb of alcoholvrij alternatief. Bewijs via WhatsApp.</p>${powerButton('✓ JA, JÄGERBOMB VOLTOOID','disarm',!seenNetwork||powerBusy)}</div>`+html;
+ }
+ el.innerHTML=html;
+ // Two buttons share the same action, but differ by which challenge they start.
+ let starter=0;
+ for(const btn of el.querySelectorAll('[data-action]')){
+  const action=btn.dataset.action;
+  if(action==='challenge-start'){const type=starter++===0?'honey':'celebrity';btn.addEventListener('click',()=>powerAction(action,type));}
+  else btn.addEventListener('click',()=>powerAction(action));
+ }
+ const status=[];
+ if(p.bombActive)status.push('💥 JÄGERBOMB ACTIEF');
+ if(challengeActive)status.push('⏳ '+(c.type==='honey'?'HONEY TRAP':'CELEBRITY HUNTER')+' '+msToTimer(Math.max(0,c.deadline-clockNow())));
+ if(d.status==='pending')status.push('🐔 SPLIT THE G');
+ if(d.escapeUntil&&clockNow()<d.escapeUntil)status.push('🛡️ CHICKENS IMMUUN '+msToTimer(d.escapeUntil-clockNow()));
+ $('powerStatus').textContent=status.join(' · ');renderQuickAction();
+}
+
+function renderQuickAction(){
+ const btn=$('roleQuickBtn');if(!btn)return;
+ const p=serverState.powerups||{},d=serverState.duel||{};
+ const running=serverState.status==='running'&&game&&clockNow()-game.start<7200000;
+ if(!role||!running){btn.style.display='none';return}
+ btn.style.display='flex';btn.disabled=!seenNetwork||powerBusy;
+ if(role==='chicken'){
+   btn.className='btn quick-action chicken-button';
+   btn.textContent=p.bombActive?'💥 JÄGERBOMB ACTIEF · JAGERS STOPPEN':p.bombUsed?'💣 JÄGERBOMB AL GEBRUIKT':'💣 DROP JÄGERBOMB · 1×';
+   btn.disabled ||= Boolean(p.bombUsed);
+ }else{
+   btn.className='btn quick-action hunter-button';
+   if(p.bombActive){btn.textContent='💣 JÄGERBOMB ACTIEF · OPEN MELDING';btn.disabled=false;}
+   else if(d.status==='pending'){btn.textContent='🥃 SPLIT THE G BEZIG · OPEN MELDING';btn.disabled=false;}
+   else if(d.escapeUntil&&clockNow()<d.escapeUntil){btn.textContent='🐔 CHICKENS HEBBEN VOORSPRONG';btn.disabled=true;}
+   else{btn.textContent='🎯 CHICKENS GEVONDEN!';btn.disabled ||= clockNow()-game.start<600000;}
+ }
+}
+function quickAction(){
+ if(!role||!game)return;
+ if(role==='chicken')return powerAction('bomb');
+ if(serverState.powerups?.bombActive||serverState.duel?.status==='pending'){
+   minimizedChallengeKey='';renderGameAlert();return;
+ }
+ return powerAction('catch');
+}
+function dismissEvent(eventId){try{localStorage.setItem('chicken-event-'+room+'-'+serverState.revision+'-'+eventId,'seen')}catch(e){}renderGameAlert()}
+function eventAcknowledged(ev){try{return localStorage.getItem('chicken-event-'+room+'-'+serverState.revision+'-'+ev.id)==='seen'}catch(e){return false}}
+function challengeKey(){const c=serverState.challenge||{};return room+'-'+serverState.revision+'-'+c.startedAt}
+function updateChallengeStrip(){
+ const c=serverState.challenge||{};
+ const live=serverState.status==='running'&&c.status==='active'&&!gameEnded();
+ $('challengeStrip').classList.toggle('show',live);
+ if(live){$('challengeStripLabel').textContent=c.type==='honey'?'💋 HONEY TRAP':'📸 CELEBRITY HUNTER';$('challengeStripTime').textContent=msToTimer(Math.max(0,c.deadline-clockNow()))}
+}
+function minimizeChallenge(){minimizedChallengeKey=challengeKey();renderGameAlert()}
+function renderGameAlert(){
+ const el=$('gameAlert');if(!role||!game){el.classList.remove('show');el.dataset.signature='';return}
+ const p=serverState.powerups||{},d=serverState.duel||{},c=serverState.challenge||{};
+ let title='',body='',foot='',buttons=[],timer=false;
+ const expired=gameEnded();
+ if(expired){
+  title=serverState.status==='captured'?'🏆 GAME OVER · JAGERS WINNEN':'🏆 GAME OVER · CHICKENS WINNEN';
+  body='De ronde is afgelopen. Iedereen kan op OPNIEUW SPELEN drukken om samen een volledig nieuwe ronde met willekeurige zones en herstelde power-ups te starten.';
+  buttons=[['↻ OPNIEUW SPELEN','restart']];
+ }else if(d.status==='pending'&&!(p.bombActive&&role==='hunter')){
+  title=role==='hunter'?'🐔 CHICKENS GEVONDEN! · SPLIT THE G':'🐔 GEVANGEN! · SPLIT THE G';
+  body='Beide chickens zijn gevangen, maar een kip zonder kop kan doorlopen! Kies één chicken en één jager. Neem ieder één slok Guinness (0.0 mag) en probeer de vloeistoflijn exact door de G op het glas te laten lopen. Wie het best split, wint!';
+  foot=role==='hunter'?'JAGERS: registreer na de uitdaging JA als jullie winnen, NEE als de chickens winnen. Bij gelijkspel opnieuw proberen.':'CHICKENS: win Split the G om 60 seconden weg te mogen lopen. De jagers registreren daarna de uitslag.';
+  if(role==='hunter')buttons=[['✅ JA, JAGERS HEBBEN GEWONNEN','duel-result','hunter'],['❌ NEE, CHICKENS HEBBEN GEWONNEN','duel-result','chicken']];
+ }else if(p.bombActive&&role==='hunter'){
+  title='‼️ 💣 JÄGERBOMB ‼️';body='BOEM! De chickens hebben een bom op jullie gedropt. STOP met jagen en herlaad in een pub. Ieder een Jägerbomb of alcoholvrij alternatief, met bewijs via WhatsApp.';
+  foot='Jagers: pas als jullie allebei klaar zijn, mogen jullie op JA, VOLTOOID drukken. Tot die tijd is de jacht gepauzeerd. De app kan fysieke beweging niet handhaven.';
+  buttons=[['✅ JA, JÄGERBOMB VOLTOOID','disarm']];
+ }else if(c.status==='active'){
+  timer=true;
+  if(c.type==='honey'){
+   title=role==='hunter'?'💋 HONEY TRAP · 5 MINUTEN':'🚨 JAGERS PROBEREN HONEY TRAP!';
+   body=role==='hunter'?'Fix binnen vijf minuten het nummer of Instagram-account van een Ierse. Bewijs via WhatsApp; meld vóór de timer op nul staat dat het gelukt is.':'De jagers hebben vijf minuten om een nummer of Instagram te regelen. Als ze slagen moeten jullie je actuele WhatsApp-locatie delen. Als ze falen, hoeven jullie niets te doen.';
+  }else{
+   title=role==='hunter'?'🥊 CELEBRITY HUNTER · 5 MINUTEN':'🚨 JAGERS ZOEKEN EEN CELEBRITY!';
+   body=role==='hunter'?'Vind binnen vijf minuten een McGregor- of Ed Sheeran-lookalike en maak een foto met toestemming. Stuur bewijs via WhatsApp en bevestig op tijd.':'De jagers zoeken vijf minuten naar een McGregor- of Ed Sheeran-lookalike. Lukt het, dan moeten jullie een actuele omgevingsfoto sturen. Anders niet.';
+  }
+  foot=role==='hunter'?'Eén kans per challenge per spel.':'Dezelfde timer loopt op alle vier de telefoons.';
+  if(role==='hunter')buttons=[['✓ OPDRACHT GELUKT','challenge-success'],['✕ NIET GELUKT','challenge-fail']];
+  buttons.push(['↘ MINIMALISEER','minimize']);
+ }else{
+  const due=(serverState.events||[]).filter(ev=>{
+    if(eventAcknowledged(ev))return false;
+    const type=ev.type;
+    if(role==='chicken')return ['honey-won','honey-failed','celebrity-won','celebrity-failed','bomb','disarm'].includes(type);
+    return ['honey-won','honey-failed','celebrity-won','celebrity-failed','disarm'].includes(type);
+  });
+  const ev=due[0];
+  if(ev){
+   const outcomes={
+    'honey-won':['💋 HONEY TRAP · GELUKT!','De jagers hebben binnen vijf minuten een contact gefixt! CHICKENS: stuur NU jullie huidige WhatsApp-locatie.'],
+    'honey-failed':['💋 HONEY TRAP · MISLUKT!','De jagers hebben hun opdracht niet op tijd gehaald. Chickens hoeven geen locatie te delen.'],
+    'celebrity-won':['📸 CELEBRITY HUNTER · GELUKT!','De jagers hebben de lookalike gefotografeerd! CHICKENS: stuur NU een foto van jullie directe omgeving via WhatsApp.'],
+    'celebrity-failed':['📸 CELEBRITY HUNTER · MISLUKT!','Geen celebrity op tijd gevonden. Chickens hoeven geen omgevingsfoto te delen.'],
+    bomb:['💣 BOM GEDROPT!','De jagers moeten stoppen en herladen. Jullie bom is nu opgebruikt.'],
+    disarm:['🔫 JÄGERBOMB ONTMANTELD','De jagers zijn herladen en mogen weer op jacht.']
+   };
+   [title,body]=outcomes[ev.type]||['LIVE EVENT','Er is iets gebeurd.'];
+   if(role==='hunter'&&(ev.type.endsWith('-won')))body='Gelukt! De chickens moeten nu de verdiende hint naar jullie sturen via WhatsApp.';
+   if(role==='hunter'&&(ev.type.endsWith('-failed')))body='Niet gelukt binnen vijf minuten. Geen beloning en deze challenge is voor deze ronde opgebruikt.';
+   buttons=[['✓ BEGREPEN','dismiss',ev.id]];
+  }else if(d.escapeUntil&&clockNow()<d.escapeUntil){
+   title='🛡️ HEADLESS ESCAPE';body='De chickens hebben Split the G gewonnen! Jagers blijven 60 seconden stil. Tijd over: '+msToTimer(d.escapeUntil-clockNow());
+   foot='De tweede kans is gebruikt. Bij de volgende vangst winnen de jagers direct.';
+  }
+ }
+ if(!title){el.classList.remove('show');el.dataset.signature='';updateChallengeStrip();return}
+ if(timer&&minimizedChallengeKey===challengeKey()){el.classList.remove('show');el.dataset.signature='';updateChallengeStrip();return}
+ updateChallengeStrip();
+ $('alertTitle').textContent=title;$('alertBody').textContent=body;$('alertFoot').textContent=foot;
+ $('alertCountdown').hidden=!timer;
+ if(timer)$('alertClock').textContent=msToTimer(Math.max(0,c.deadline-clockNow()));
+ const signature=JSON.stringify([title,body,foot,buttons,timer]);
+ if(el.dataset.signature===signature){el.classList.add('show');return}
+ el.dataset.signature=signature;
+ const ac=$('alertActions');ac.replaceChildren();
+ for(const [label,action,val] of buttons){const b=document.createElement('button');b.className='btn '+(action==='duel-result'&&val==='hunter'?'red':'primary');b.textContent=label;
+  if(action==='dismiss')b.onclick=()=>dismissEvent(val);
+  else if(action==='minimize')b.onclick=minimizeChallenge;
+  else if(action==='restart')b.onclick=()=>changeGame('restart');
+  else b.onclick=()=>powerAction(action,val);ac.append(b)}
+ el.classList.add('show');
+}
+function togglePowerPanel(force){if(!role){openRoleModal();return}const el=$('powerPanel');el.classList.toggle('open',typeof force==='boolean'?force:!el.classList.contains('open'));renderPowers()}
+function renderPhoto(){const el=$('photoOverlay');if(!role||role!=='chicken'||!game||(serverState.status==='captured'||serverState.status==='finished')){el.classList.remove('show');return}
  const mins=(clockNow()-game.start)/60000;
  const due=[{at:30,id:'1',text:'Foto-opdracht 1: maak samen een foto van jullie schuilplek en stuur hem via WhatsApp naar de jagers. Vermijd een exacte locatie.'},{at:70,id:'2',text:'Foto-opdracht 2: stuur opnieuw een foto van jullie huidige pub of omgeving naar de jagers via WhatsApp. Geen exacte GPS nodig.'}].filter(x=>mins>=x.at);
- const pending=due.find(x=>{try{return localStorage.getItem('duck-photo-'+room+'-'+serverState.revision+'-'+x.id)!=='dismissed'}catch(e){return true}});
+ const pending=due.find(x=>{try{return localStorage.getItem('chicken-photo-'+room+'-'+serverState.revision+'-'+x.id)!=='dismissed'}catch(e){return true}});
  if(!pending){el.classList.remove('show');return}
- $('photoTitle').textContent='📸 FOTOCHALLENGE '+pending.id+' · DUCKS';$('photoText').textContent=pending.text;
+ $('photoTitle').textContent='📸 FOTOCHALLENGE '+pending.id+' · CHICKENS';$('photoText').textContent=pending.text;
  el.dataset.photo=pending.id;if(!el.classList.contains('show'))notifyOnce('photo-'+serverState.revision+'-'+pending.id,'alert');el.classList.add('show');
 }
-function dismissPhoto(){const id=$('photoOverlay').dataset.photo;try{localStorage.setItem('duck-photo-'+room+'-'+serverState.revision+'-'+id,'dismissed')}catch(e){}$('photoOverlay').classList.remove('show');renderPhoto()}
+function dismissPhoto(){const id=$('photoOverlay').dataset.photo;try{localStorage.setItem('chicken-photo-'+room+'-'+serverState.revision+'-'+id,'dismissed')}catch(e){}$('photoOverlay').classList.remove('show');renderPhoto()}
 function showToast(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),3300)}
 function sound(type='beep'){if(!audioEnabled||!audioContext)return;try{const now=audioContext.currentTime;const notes=type==='alert'?[660,880,660]:[520,680];notes.forEach((f,i)=>{const osc=audioContext.createOscillator(),gain=audioContext.createGain();osc.type='sine';osc.frequency.value=f;gain.gain.setValueAtTime(.0001,now+i*.19);gain.gain.exponentialRampToValueAtTime(.085,now+i*.19+.018);gain.gain.exponentialRampToValueAtTime(.0001,now+i*.19+.16);osc.connect(gain).connect(audioContext.destination);osc.start(now+i*.19);osc.stop(now+i*.19+.17)})}catch(e){console.warn(e)}}
 function activateAudio(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C){showToast('Dit apparaat ondersteunt geen geluid.');return}audioContext??=new C();audioContext.resume();audioEnabled=true;$('audioBtn').textContent='♫ Geluid staat aan';$('audioBtn').className='btn secondary';sound();showToast('Geluid aan. Houd de website open voor meldingen.')}catch(e){showToast('Geluid kon niet ingeschakeld worden.')}}
@@ -347,23 +538,27 @@ function notifyOnce(key,type='beep'){if(!playedCues.has(key)){playedCues.add(key
 function tick(){
  const now=clockNow(),elapsed=game?(now-game.start)/60000:-1,stage=currentPhase(now),phaseElapsed=game?Math.max(0,elapsed-stage*20):0;
  const status=$('livePill'),title=$('sideTitle'),timerLabel=$('timerLabel'),time=$('mainTimer'),chip=$('roundChip');let notice=null;
- if(!game){status.textContent='◷ WACHTKAMER';title.textContent='Ready for the hunt?';timerLabel.textContent='SPELDUUR';time.textContent='120:00';chip.textContent='6 ZONES';$('nextTime').textContent='—';notice={kind:'green',html:'<strong>🦆 Klaar om te spelen?</strong> Deel de spellink met alle spelers. Iedereen mag daarna op START drukken. Het spel begint voor iedereen tegelijk.'};}
- else if(elapsed>=120){status.textContent='■ GAME OVER';title.textContent='Game over.';timerLabel.textContent='SPEL AFGELOPEN';time.textContent='00:00';$('nextTime').textContent='—';chip.textContent='FINISH';notice={kind:'green',html:'<strong>🏆 De eenden winnen!</strong> Twee uur voorbij. Klik op RESET om met iedereen een volledig nieuw spel met andere zones te beginnen.'};notifyOnce('finish','alert')}
- else {const waiting=elapsed<10;status.textContent=waiting?'◷ EENDENVOORSPRONG':'● GAME LIVE';chip.textContent='ZONE '+(stage+1)+' / 6';title.textContent=waiting?'Run, ducks, run.':stage===5?'FINAL HUNT.':'Stay out of sight.';timerLabel.textContent=stage===5?'TIJD TOT EINDE':'TIJD TOT VOLGENDE ZONE';time.textContent=msToTimer((stage===5?120-elapsed:20-phaseElapsed)*60000);$('nextTime').textContent=stage<5?formatClock(game.start+(stage+1)*20*60000):'FINISH';
- if(waiting){notice={kind:'green',html:'<strong>🦆 De eenden zijn vertrokken!</strong> Jagers wachten nog '+msToTimer((10-elapsed)*60000)+' bij het startpunt.'}}
+ if(!game){status.textContent='◷ WACHTKAMER';title.textContent='Ready for the hunt?';timerLabel.textContent='SPELDUUR';time.textContent='120:00';chip.textContent='6 ZONES';$('nextTime').textContent='—';notice={kind:'green',html:'<strong>🐔 Klaar om te spelen?</strong> Deel de spellink met alle spelers. Iedereen mag daarna op START drukken. Het spel begint voor iedereen tegelijk.'};}
+ else if(serverState.status==='captured'){status.textContent='■ JAGERS WINNEN';title.textContent='Chickens caught!';timerLabel.textContent='SPEL AFGELOPEN';time.textContent='00:00';$('nextTime').textContent='—';chip.textContent='GAME OVER';notice={kind:'red',html:'<strong>🎯 JAGERS WINNEN!</strong> Beide chickens zijn gevangen. Klik op OPNIEUW SPELEN voor een nieuwe ronde.'};}
+ else if(elapsed>=120){status.textContent='■ GAME OVER';title.textContent='Game over.';timerLabel.textContent='SPEL AFGELOPEN';time.textContent='00:00';$('nextTime').textContent='—';chip.textContent='FINISH';notice={kind:'green',html:'<strong>🏆 De chickens winnen!</strong> Twee uur voorbij. Klik op OPNIEUW SPELEN voor een nieuwe ronde met nieuwe zones.'};notifyOnce('finish','alert')}
+ else {const waiting=elapsed<10;status.textContent=waiting?'◷ EENDENVOORSPRONG':'● GAME LIVE';chip.textContent='ZONE '+(stage+1)+' / 6';title.textContent=waiting?'Run, chickens, run.':stage===5?'FINAL HUNT.':'Stay out of sight.';timerLabel.textContent=stage===5?'TIJD TOT EINDE':'TIJD TOT VOLGENDE ZONE';time.textContent=msToTimer((stage===5?120-elapsed:20-phaseElapsed)*60000);$('nextTime').textContent=stage<5?formatClock(game.start+(stage+1)*20*60000):'FINISH';
+ if(waiting){notice={kind:'green',html:'<strong>🐔 De chickens zijn vertrokken!</strong> Jagers wachten nog '+msToTimer((10-elapsed)*60000)+' bij het startpunt.'}}
  else if(elapsed>=115){notice={kind:'red',html:'<strong>🔥 LAATSTE 5 MINUTEN!</strong> De laatste zone heeft een straal van 150 meter.'}}
  else if(phaseElapsed>=15&&stage<5){notice={kind:'red',html:'<strong>⚠ VOLGENDE ZONE BEKEND!</strong> De oranje stippellijn toont de nieuwe grens, actief over '+msToTimer((20-phaseElapsed)*60000)+'. Ga veilig die kant op.'}}
  else if(stage===5){notice={kind:'red',html:'<strong>🔥 FINAL ZONE!</strong> De laatste zone is 150 meter. Nog '+msToTimer((120-elapsed)*60000)+' tot de finish.'}}
- else{notice={kind:'dark',html:'<strong>🍺 Duck Hunt is live.</strong> Over '+msToTimer((15-phaseElapsed)*60000)+' verschijnt de volgende, willekeurige zone. Eenden ontvangen hun foto-opdrachten afzonderlijk.'}}
+ else{notice={kind:'dark',html:'<strong>🍺 Chicken Hunt is live.</strong> Over '+msToTimer((15-phaseElapsed)*60000)+' verschijnt de volgende, willekeurige zone. Chickens ontvangen hun foto-opdrachten afzonderlijk.'}}
  if(elapsed>=10)notifyOnce('hunt-start','alert');if(stage!==lastPhase){if(lastPhase>=0)notifyOnce('zone-'+stage,'alert');lastPhase=stage;refreshMap();renderPubs()}if(stage<5&&phaseElapsed>=15)notifyOnce('warning-'+stage,'alert');
  }
  $('zoneSize').textContent=stage===0?'Startgebied':RADII[stage]+' m';$('phaseStart').textContent=game?formatClock(game.start)+' · START':'WACHT OP START';$('phaseList').innerHTML=Array.from({length:6},(_,i)=>`<span class="phase-dot ${game&&i<stage?'done':game&&i===stage?'active':''}"></span>`).join('');
  $('noticeBox').className='notice foldable '+(notice.kind==='orange'?'':notice.kind);$('noticeBox').innerHTML=notice.html;
+ renderQuickAction();
  const key=(!game?'lobby':stage+':'+(stage<5&&phaseElapsed>=15?'next':'current'));
  if(key!==lastStageStamp){lastStageStamp=key;refreshMap()}
  if(game)renderPhoto();
+ if(game){renderGameAlert();if(serverState.challenge?.status==='active'||(serverState.duel?.escapeUntil||0)>now)renderPowers();if(gameEnded())connection(seenNetwork)}
 }
-$('startSharedBtn').addEventListener('click',()=>changeGame('start'));
+$('roleQuickBtn').addEventListener('click',quickAction);
+$('startSharedBtn').addEventListener('click',()=>changeGame(gameEnded()?'restart':'start'));
 $('resetSharedBtn').addEventListener('click',()=>changeGame('reset'));
 $('quickShareBtn').addEventListener('click',shareLink);
 $('shareBtn').addEventListener('click',shareLink);
@@ -371,6 +566,10 @@ $('roleChip').addEventListener('click',openRoleModal);
 for(const b of document.querySelectorAll('[data-role]'))b.addEventListener('click',()=>selectRole(b.dataset.role));
 $('roleConfirm').addEventListener('click',confirmRole);
 $('photoDismissBtn').addEventListener('click',dismissPhoto);
+$('powerBtn').addEventListener('click',()=>togglePowerPanel());
+$('sidebarPowers').addEventListener('click',()=>togglePowerPanel());
+$('closePowers').addEventListener('click',()=>togglePowerPanel(false));
+$('challengeStripOpen').addEventListener('click',()=>{minimizedChallengeKey='';renderGameAlert()});
 $('audioBtn').addEventListener('click',activateAudio);
 $('locateBtn').addEventListener('click',startLocation);
 $('fitBtn').addEventListener('click',fitBase);
