@@ -83,7 +83,7 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
 <body>
 <div id="app">
 <header>
-  <div class="brand"><div class="ducky">🐔</div><div><div class="brand-title">CHICKEN HUNT <span style="color:#f3b64d">DUBLIN</span></div><div class="brand-sub">2 CHICKENS · 2 HUNTERS · LIVE V6</div></div></div>
+  <div class="brand"><div class="ducky">🐔</div><div><div class="brand-title">CHICKEN HUNT <span style="color:#f3b64d">DUBLIN</span></div><div class="brand-sub">2 CHICKENS · 2 HUNTERS · LIVE V9</div></div></div>
   <div class="top-right"><span class="top-date">SAT 7 NOV · FROM 17:00</span><button class="role-pill" id="roleChip" title="Wijzig je rol" style="display:none">ROL</button><span class="live-pill" id="livePill">● LOBBY</span></div>
 </header>
 <div id="statusRibbon" role="alert">Geen verbinding met de spelsynchronisatie. Gebruik de nieuwe Cloudflare Workers-link, niet de oude Pages-link.</div>
@@ -99,10 +99,10 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
     </div><button type="button" class="btn quick-action" id="roleQuickBtn" style="display:none" disabled>Actie laden…</button><button id="detailsBtn">▲ Alle spelinfo</button>
     <div id="roomInfo">SPELROOM WORDT GELADEN…</div><div class="server-state" id="connectionLabel">Verbinden met live spel…</div></section>
     <div class="power-live" id="powerStatus" aria-live="polite"></div>
-    <section class="panel foldable"><div class="splithead"><h3>ZONE PROGRESSION</h3><span class="session-id" id="sessionId">V6 · LIVE</span></div><div class="phase-list" id="phaseList"></div><div class="phase-meta"><span id="phaseStart">17:00 · START</span><span>120 MIN · FINISH</span></div><p class="hint" style="margin-bottom:0">Iedere 20 minuten krimpt het gebied. De volgende zone verschijnt 5 minuten eerder.</p></section>
+    <section class="panel foldable"><div class="splithead"><h3>ZONE PROGRESSION</h3><span class="session-id" id="sessionId">V9 · LIVE</span></div><div class="phase-list" id="phaseList"></div><div class="phase-meta"><span id="phaseStart">17:00 · START</span><span>120 MIN · FINISH</span></div><p class="hint" style="margin-bottom:0">Iedere 20 minuten krimpt het gebied. De volgende zone verschijnt 5 minuten eerder.</p></section>
     <div class="notice green foldable" id="noticeBox"><strong>🐔 Eerste 10 minuten:</strong> de chickens vertrekken, terwijl de jagers blijven wachten op de startlocatie.</div>
     <div class="btn-group foldable"><button class="btn secondary" id="sidebarPowers">⚡ Open power-ups</button><button class="btn gold" id="shareBtn">↗ Deel de spellink</button><button class="btn plain" id="audioBtn">♪ Geluid aanzetten</button><button class="btn secondary" id="pubsBtn">🍺 Bekijk alle pubs</button></div>
-    <section class="panel foldable"><h3>DE REGELS</h3><ul class="rules"><li>De chickens blijven samen; de jagers ook.</li><li>De chickens mogen pubs in en uit.</li><li>Jagers die een pub doorzoeken, bestellen volgens jullie afspraak een alcoholische versnapering. Drink met mate; niemand hoeft alcohol te drinken.</li><li>De jagers winnen zodra ze beide chickens fysiek vinden.</li><li>Blijven de chickens na twee uur ongezien? Dan winnen de chickens.</li><li>Spelers houden zich eerlijk aan de actieve zone. Publieke, veilige routes blijven leidend.</li></ul></section>
+    <section class="panel foldable"><h3>DE REGELS</h3><ul class="rules"><li>De chickens blijven samen; de jagers ook.</li><li>De chickens mogen pubs in en uit.</li><li>Jagers die een pub doorzoeken, bestellen volgens jullie afspraak een drankje. Drink met mate en respecteer elkaars grenzen.</li><li>Bij de eerste vangst volgt Split the G: winnen de chickens, dan gaat dezelfde ronde verder. Na de tweede vangst winnen de jagers direct.</li><li>Is na twee uur geen definitieve vangst geregistreerd? Dan winnen de chickens.</li><li>Spelers houden zich eerlijk aan de actieve zone. Publieke, veilige routes blijven leidend.</li></ul></section>
     <p class="hint foldable">GPS is alleen zichtbaar op jouw eigen iPhone en wordt niet verstuurd. De gedeelde server bewaart speltijden, zones en geactiveerde power-ups, maar geen spelerslocaties, telefoonnummers of foto’s. Iedere start krijgt nieuwe random zones. Laat je telefoon ontgrendeld om live geluidssignalen te horen.</p>
   </div></aside>
   <div class="map-area"><div id="map" class="map" role="application" aria-label="Interactieve Chicken Hunt kaart van Dublin"></div>
@@ -137,7 +137,7 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 'use strict';
-// CHICKEN HUNT DUBLIN v6 — one shared Cloudflare room; deterministic seeded zones.
+// CHICKEN HUNT DUBLIN V9 — one shared Cloudflare room; deterministic seeded zones.
 const RULES={duration:120,headstart:10,zones:6,step:20,warning:5,scheduleUTC:Date.UTC(2026,10,7,17,0,0)};
 // Dublin is UTC+0 on 7 November 2026; 17:00 Dublin = 17:00 UTC.
 const REF=[-6.265,53.3383], METERS_X=66300, METERS_Y=111200;
@@ -207,7 +207,9 @@ const HOTSPOTS=[
  {name:'Camden Street Lower',x:-6.26525,y:53.33515},
  {name:'Camden Street Upper',x:-6.2650,y:53.33355}
 ];
-const RADII=[null,885,650,470,260,150];
+// Measured in metres: stage 0 is the full starting polygon, stages 1-5 are progressively smaller circles.
+// Final zone radius is 75 metres (diameter 150 metres).
+const RADII=[null,600,425,290,165,75];
 const $=id=>document.getElementById(id);
 function xy(p){return [(p[0]-REF[0])*METERS_X,(p[1]-REF[1])*METERS_Y]}
 function ll(p){return [REF[0]+p[0]/METERS_X,REF[1]+p[1]/METERS_Y]}
@@ -229,7 +231,7 @@ function deriveZones(seed){
  const h=choices[Math.floor(random()*choices.length)];
  const centers=Array(6);centers[5]=xy([h.x,h.y]);
  // Build backwards, with bounded centre shifts. Every new ring fits entirely in its predecessor.
- // Move early centres towards the original area's centre so the first cut is mild.
+ // Move early centres towards the original area's centre while keeping successive circles nested.
  for(let i=4;i>=1;i--){
    const child=centers[i+1];
    const toward=[baseCenter[0]-child[0],baseCenter[1]-child[1]];
@@ -243,15 +245,9 @@ function deriveZones(seed){
    if(stepLen>available*.88)step=step.map(v=>v*available*.88/stepLen);
    centers[i]=vecAdd(child,step);
  }
- // First shrink: a small, random trim of the full irregular boundary.
- // This avoids suddenly forcing people from Camden Street to Dame Lane (or vice versa).
- const xs=baseXY.map(p=>p[0]),ys=baseXY.map(p=>p[1]);
- const minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
- const xTrim=.065+random()*.035,yTrim=.055+random()*.035;
- const cx=(minX+maxX)/2+(random()-.5)*20,cy=(minY+maxY)/2+(random()-.5)*20;
- const hx=(maxX-minX)*(.5-xTrim),hy=(maxY-minY)*(.5-yTrim);
- const insideBox=[[cx-hx,cy-hy],[cx+hx,cy-hy],[cx+hx,cy+hy],[cx-hx,cy+hy]];
- const first=clipConvex(baseXY,insideBox);
+ // First shrink is now a real circular reduction rather than a very small rectangular trim.
+ // The original start area remains unchanged and all later zones are clipped inside the previous zone.
+ const first=clipConvex(baseXY,circle(centers[1],RADII[1]));
  const shapes=[BASE,first.map(ll)];
  for(let i=2;i<6;i++){
    const previous=shapes[i-1].map(xy);
@@ -269,8 +265,8 @@ function formatClock(ts){return new Date(ts).toLocaleTimeString('en-GB',{timeZon
 function msToTimer(ms){let s=Math.max(0,Math.ceil(ms/1000));return `${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
 let map=null,zones=null,game=null,pubs=FALLBACK.slice(),mapReady=false,audioEnabled=false,audioContext=null,currentLocation=null,currentMarker=null,currentAccuracy=null,lastPhase=-1,lastCue='',openPub=null,pubsVisible=true,toastTimer=null,geoWatch=null,lastStageStamp='';
 function pubFeatureCollection(){return {type:'FeatureCollection',features:(pubsVisible?pubs:[]).map((p,i)=>({type:'Feature',properties:{name:p.name,kind:p.kind,index:i,inside:zones?isPubInZone(p,Math.max(0,currentPhase())):true},geometry:{type:'Point',coordinates:[p.lng,p.lat]}}))}}
-function currentPhase(now=clockNow()){if(!game)return 0;const mins=(now-game.start)/60000;return Math.min(5,Math.max(0,Math.floor(mins/RULES.step)))}
-function refreshMap(){if(!mapReady||!zones)return;const stage=currentPhase(),mins=game?(clockNow()-game.start)/60000:0,nextShown=game&&mins>=0&&mins<100&&mins%20>=15;const active=zones.shapes[stage];map.getSource('zone').setData(feature(active));map.getSource('upcoming').setData(nextShown?feature(zones.shapes[stage+1]):emptyFC());map.getSource('pubs').setData(pubFeatureCollection());}
+function currentPhase(now=gameClockNow()){if(!game)return 0;const mins=(now-game.start)/60000;return Math.min(5,Math.max(0,Math.floor(mins/RULES.step)))}
+function refreshMap(){if(!mapReady||!zones)return;const stage=currentPhase(),mins=game?(gameClockNow()-game.start)/60000:0,nextShown=game&&mins>=0&&mins<100&&mins%20>=15;const active=zones.shapes[stage];map.getSource('zone').setData(feature(active));map.getSource('upcoming').setData(nextShown?feature(zones.shapes[stage+1]):emptyFC());map.getSource('pubs').setData(pubFeatureCollection());}
 function updatePubSource(){if(mapReady)map.getSource('pubs').setData(pubFeatureCollection());renderPubs()}
 function initMap(){if(!window.maplibregl){$('map').innerHTML='<div style="padding:36px">Kaartbibliotheek kon niet laden. Controleer je internetverbinding en herlaad de pagina.</div>';return}
  map=new maplibregl.Map({container:'map',style:'https://tiles.openfreemap.org/styles/bright',center:[-6.2651,53.33905],zoom:14.3,pitch:0,bearing:0,attributionControl:true,cooperativeGestures:false});
@@ -305,8 +301,13 @@ async function fetchPubs(){// OpenStreetMap Overpass; curated fallback remains i
 function renderPubs(){const term=$('pubSearch').value.trim().toLowerCase(),panel=$('pubItems');panel.replaceChildren();let list=pubs.filter(p=>p.name.toLowerCase().includes(term));const stage=currentPhase();list.sort((a,b)=>Number(isPubInZone(b,stage))-Number(isPubInZone(a,stage))||a.name.localeCompare(b.name));$('pubCount').textContent=`🍺 ${pubs.length} pubs & bars`;
  for(const p of list){const row=document.createElement('button');row.type='button';row.className='pub-row';const left=document.createElement('div');const name=document.createElement('div');name.className='nm';name.textContent=p.name;const sub=document.createElement('div');sub.className='ct';sub.textContent=(isPubInZone(p,stage)?'● Binnen zone':'○ Buiten zone')+' · '+(p.kind==='pub'?'Pub':'Bar')+(p.address?' · '+p.address:'');left.append(name,sub);const arrow=document.createElement('span');arrow.className='nav';arrow.textContent='↗';row.append(left,arrow);row.onclick=()=>{flyPub(p);$('pubDrawer').classList.remove('open')};panel.appendChild(row)}if(!list.length)panel.textContent='Geen pubs gevonden.'}
 // Cloudflare Durable Object synchronisation: one room = one server-held state.
-let room='',role='',draftRole='',serverState={status:'lobby',revision:-1,start:null,seed:null,powerups:{},challenge:{},duel:{},events:[],eventSeq:0},serverOffset=0,syncBusy=false,seenNetwork=false,playedCues=new Set(),powerBusy=false,lastEventId=0,minimizedChallengeKey="";
+let room='',role='',draftRole='',serverState={status:'lobby',revision:-1,start:null,originalStart:null,seed:null,powerups:{},challenge:{},duel:{},events:[],eventSeq:0},serverOffset=0,syncBusy=false,seenNetwork=false,playedCues=new Set(),powerBusy=false,lastEventId=0,minimizedChallengeKey="";
 function clockNow(){return Date.now()+serverOffset}
+// The zone clock freezes during Split the G; power-up countdowns use real time.
+function gameClockNow(){
+ const d=serverState.duel||{};
+ return serverState.status==='running'&&d.status==='pending'&&Number.isFinite(d.pausedAt)?d.pausedAt:clockNow();
+}
 function makeRoom(){const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',bytes=new Uint8Array(9);crypto.getRandomValues(bytes);return Array.from(bytes,b=>chars[b%chars.length]).join('')}
 function setupRoom(){let url=new URL(location.href);room=(url.searchParams.get('room')||'').toUpperCase();if(!/^[A-Z2-9]{8,12}$/.test(room)){room=makeRoom();url.searchParams.set('room',room);url.hash='';history.replaceState(null,'',url.href)}
  $('roomInfo').textContent='SPELROOM '+room+' · deel deze link vóór iemand op START drukt.';
@@ -320,21 +321,29 @@ function renderRole(){
 function openRoleModal(){draftRole=role;for(const b of document.querySelectorAll('[data-role]'))b.classList.toggle('chosen',b.dataset.role===draftRole);$('roleConfirm').disabled=!draftRole;$('startPanel').style.display='flex'}
 function selectRole(v){draftRole=v;for(const b of document.querySelectorAll('[data-role]'))b.classList.toggle('chosen',b.dataset.role===v);$('roleConfirm').disabled=false}
 function confirmRole(){if(!draftRole)return;role=draftRole;try{localStorage.setItem('chicken-role-'+room,role)}catch(e){};renderRole();$('startPanel').style.display='none';connection(seenNetwork);tick();renderPhoto();renderPowers();renderGameAlert()}
-function gameEnded(){return serverState.status==='captured'||serverState.status==='finished'||(serverState.status==='running'&&Number.isFinite(serverState.start)&&clockNow()-serverState.start>=120*60000)}
+function gameEnded(){return serverState.status==='captured'||serverState.status==='finished'||(serverState.status==='running'&&Number.isFinite(serverState.start)&&gameClockNow()-serverState.start>=120*60000)}
 function connection(ok){seenNetwork=!!ok;$('connectionLabel').className='server-state'+(ok?' ok':'');$('connectionLabel').textContent=ok?'● LIVE VERBONDEN · alle telefoons gesynchroniseerd':'● OFFLINE · live start/reset is niet beschikbaar';$('statusRibbon').classList.toggle('show',!ok);const ended=gameEnded();$('startSharedBtn').textContent=ended?'↻ OPNIEUW SPELEN':'▶ START';$('startSharedBtn').disabled=!ok||!role||(!ended&&serverState.status!=='lobby');$('resetSharedBtn').disabled=!ok||serverState.status==='lobby';renderPowers()}
 function applyState(data){
  if(!['running','lobby','captured','finished'].includes(data.status)||!Number.isInteger(data.revision))throw Error('Ongeldige servergegevens');
  const firstSync=serverState.revision<0;
+ // Older responses can arrive after a button action; never overwrite newer live events.
+ if(!firstSync&&(data.revision<serverState.revision||
+    (data.revision===serverState.revision&&(data.eventSeq||0)<(serverState.eventSeq||0))))return;
  const changed=serverState.revision!==data.revision||serverState.status==='lobby'&&data.status!=='lobby'||data.status==='lobby'&&serverState.status!=='lobby';
  const oldEvent=serverState.eventSeq||0;
- serverState={status:data.status,revision:data.revision,seed:data.seed,start:data.start,
+ serverState={status:data.status,revision:data.revision,seed:data.seed,start:data.start,originalStart:data.originalStart,
    powerups:data.powerups||{},challenge:data.challenge||{},duel:data.duel||{},eventSeq:data.eventSeq||0,events:data.events||[]};
  if(changed){minimizedChallengeKey='';lastPhase=-1;lastStageStamp='';playedCues.clear();window.__gpsCentered=false;
    if(data.status==='running'||data.status==='captured'||data.status==='finished'){
-     game={seed:data.seed>>>0,start:data.start};zones=deriveZones(game.seed);
+     game={seed:data.seed>>>0,start:data.start,originalStart:data.originalStart||data.start};zones=deriveZones(game.seed);
      if(!firstSync)showToast('🐔 Gedeelde spelsessie bijgewerkt.');
    }else{game=null;zones=deriveZones(43909);$('photoOverlay').classList.remove('show');if(!firstSync)showToast('↺ Spel gereset. Alle power-ups opnieuw beschikbaar.');}
    refreshMap();renderPubs();fitBase();
+ }
+ // Split the G reschedules start without creating a new round. Update locally
+ // without regenerating zones or resetting the map, photos or power-ups.
+ if(game&&Number.isFinite(data.start)&&game.start!==data.start){
+   game.start=data.start;lastStageStamp='';refreshMap();
  }
  if(!firstSync&&oldEvent<serverState.eventSeq){sound('alert');showToast('⚡ Nieuwe live gebeurtenis in Chicken Hunt!')}
  connection(true);tick();renderPhoto();renderPowers();renderGameAlert();
@@ -354,10 +363,10 @@ async function changeGame(action){if(!role){openRoleModal();return}if(!seenNetwo
 }
 async function powerAction(action,winner=null){
  if(powerBusy||!seenNetwork||!role)return;
- const warnings={bomb:'Drop jullie ENIGE JÄGERBOMB van deze ronde? Alle jagers moeten onmiddellijk stoppen tot ze allebei voltooid hebben.',disarm:'Hebben BEIDE jagers de Jägerbomb (of een alcoholvrij alternatief) voltooid? Pas dan mogen jullie de jacht hervatten.','challenge-start':'Start de 5-minuten-challenge? Beide teams ontvangen de melding.','challenge-success':'Is de opdracht daadwerkelijk binnen 5 minuten voltooid? Controleer het bewijs via WhatsApp.','challenge-fail':'Geef je de challenge op? Dan krijgen de jagers geen beloning.',catch:'Hebben jullie BEIDE chickens echt gevonden? Dan begint voor iedereen onmiddellijk Split the G.', 'duel-result':'Klopt de uitslag van Split the G? Bevestig JA bij winst jagers en NEE bij winst chickens.'};
+ const warnings={bomb:'Drop jullie ENIGE JÄGERBOMB van deze ronde? Alle jagers moeten onmiddellijk stoppen tot ze allebei voltooid hebben.',disarm:'Hebben BEIDE jagers hun Jägerbomb voltooid? Pas dan mogen jullie de jacht hervatten.','challenge-success':'Is de opdracht daadwerkelijk binnen 5 minuten voltooid? Controleer het bewijs via WhatsApp.','challenge-fail':'Geef je de challenge op? Dan krijgen de jagers geen beloning.',catch:'Hebben jullie BEIDE chickens echt gevonden? Dan begint voor iedereen onmiddellijk Split the G.', 'duel-result':'Klopt de uitslag van Split the G? Bevestig JA bij winst jagers en NEE bij winst chickens.'};
  if(!confirm(warnings[action]||'Power-up bevestigen?'))return;
  powerBusy=true;renderPowers();
- try{const before=Date.now(),data=await api('/api/game/action','POST',{action,role,winner,type:(action==='challenge-start'?winner:null)});serverOffset=data.serverTime-(before+Date.now())/2;applyState(data);$('powerPanel').classList.remove('open');}
+ try{const before=Date.now(),data=await api('/api/game/action','POST',{action,role,winner,type:null});serverOffset=data.serverTime-(before+Date.now())/2;applyState(data);$('powerPanel').classList.remove('open');}
  catch(e){showToast(e.message||'Power-up niet gelukt.');await syncState()}
  finally{powerBusy=false;renderPowers()}
 }
@@ -373,33 +382,24 @@ function renderPowers(){
  const el=$('powersContent');if(!el)return;
  if(!role){el.textContent='Kies eerst je rol.';return}
  const p=serverState.powerups||{},d=serverState.duel||{},c=serverState.challenge||{};
- const running=serverState.status==='running'&&game&&clockNow()-game.start<7200000;
- const huntersReleased=running&&clockNow()-game.start>=600000;
+ const running=serverState.status==='running'&&game&&gameClockNow()-game.start<7200000;
+ const huntersReleased=running&&gameClockNow()-game.start>=600000;
  const disabled=!huntersReleased||!seenNetwork||powerBusy||d.status==='pending';
  const bombDisabled=!running||!seenNetwork||powerBusy||p.bombUsed;
  const challengeActive=c.status==='active';
  let html='';
  if(role==='chicken'){
-  html=`<div class="power-card"><strong>💣 JÄGERBOMB · 1× PER SPEL</strong><p>Drop een bom op de jagers: zij moeten stoppen en in de pub herladen (Jägerbomb of alcoholvrij alternatief). Een lopende jagerchallenge mislukt.</p>${powerButton(p.bombUsed?'💥 BOM GEBRUIKT':'💣 DROP JÄGERBOMB','bomb',bombDisabled,p.bombActive?'De jagers liggen nog stil.':'')}</div>`;
-  html+=`<div class="power-card"><strong>🐔 HEADLESS CHICKEN · SPLIT THE G</strong><p>Bij vangst: één chicken tegen één jager. Wie de G het best split wint. Chickens winnen = 60 seconden ontsnappen. Guinness 0.0 is toegestaan.</p><span class="tag">${d.used?'Tweede kans is gebruikt.':'Beschikbaar bij eerste vangst.'}</span></div>`;
-  if(challengeActive)html+=`<div class="power-card"><strong>👀 JAGERS-CHALLENGE LIVE</strong><p>${c.type==='honey'?'Ze proberen een Iers telefoonnummer/Instagram te regelen. Bij succes moeten jullie de locatie delen.':'Ze zoeken een McGregor- of Ed Sheeran-lookalike. Bij succes moeten jullie een omgevingsfoto sturen.'}</p><span class="tag">Nog ${msToTimer(Math.max(0,c.deadline-clockNow()))}</span></div>`;
+  html=`<div class="power-card"><strong>💣 JÄGERBOMB · 1× PER SPEL</strong><p>Drop een bom op de jagers: zij moeten stoppen en in de pub herladen met een Jägerbomb. Een lopende jagerchallenge mislukt.</p>${powerButton(p.bombUsed?'💥 BOM GEBRUIKT':'💣 DROP JÄGERBOMB','bomb',bombDisabled,p.bombActive?'De jagers liggen nog stil.':'')}</div>`;
+  html+=`<div class="power-card"><strong>🐔 HEADLESS CHICKEN · SPLIT THE G</strong><p>Bij vangst: één chicken tegen één jager. Wie de G het best split wint. Chickens winnen = 2 minuten ontsnappen. De spelklok staat stil tijdens het duel.</p><span class="tag">${d.used?'Tweede kans is gebruikt.':'Beschikbaar bij eerste vangst.'}</span></div>`;
  }else{
-  if(challengeActive){
-   html=`<div class="power-card"><strong>${c.type==='honey'?'💋 HONEY TRAP':'📸 CELEBRITY HUNTER'} · BEZIG</strong><p>Jullie hebben nog ${msToTimer(Math.max(0,c.deadline-clockNow()))}. Leg het bewijs vast en meld tijdig of het gelukt is. De chickens kijken mee.</p>${powerButton('✓ OPDRACHT GELUKT','challenge-success',disabled||p.bombActive)}${powerButton('✕ NIET GELUKT','challenge-fail',disabled||p.bombActive)}</div>`;
-  }else{
-   html=`<div class="power-card"><strong>💋 HONEY TRAP · 5 MIN</strong><p>Regel vrijwillig het telefoonnummer of Instagram-account van een Ierse. Slaag je binnen 5 minuten? De chickens moeten hun huidige WhatsApp-locatie sturen. Geen gegevens in de app opslaan.</p>${powerButton(p.honeyUsed?'✓ UITGESPEELD':'💋 START HONEY TRAP','challenge-start',disabled||p.bombActive||p.honeyUsed||challengeActive)}</div>`;
-   html+=`<div class="power-card"><strong>🥊 CELEBRITY HUNTER · 5 MIN</strong><p>Maak binnen 5 minuten een foto met een Conor McGregor- of Ed Sheeran-lookalike. Bij succes sturen de chickens een actuele omgevingsfoto.</p>${powerButton(p.celebrityUsed?'✓ UITGESPEELD':'📸 START CELEBRITY HUNTER','challenge-start',disabled||p.bombActive||p.celebrityUsed||challengeActive)}</div>`;
-  }
-  html+=`<div class="power-card"><strong>🐔 CHICKENS GEVONDEN?</strong><p>Hebben jullie beide chickens gevonden? Druk op GEVONDEN. Op beide teams verschijnt direct de Split the G-challenge. Jagers registreren daarna JA of NEE.</p>${powerButton('🐔 CHICKENS GEVONDEN!','catch',disabled||p.bombActive||(d.escapeUntil&&clockNow()<d.escapeUntil))}</div>`;
-  if(p.bombActive)html=`<div class="power-card"><strong>💥 JÄGERBOMB ACTIEF</strong><p>Stop de jacht. Herlaad per jager met Jägerbomb of alcoholvrij alternatief. Bewijs via WhatsApp.</p>${powerButton('✓ JA, JÄGERBOMB VOLTOOID','disarm',!seenNetwork||powerBusy)}</div>`+html;
+  html=`<div class="power-card"><strong>🐔 CHICKENS GEVONDEN?</strong><p>Hebben jullie beide chickens gevonden? Druk op GEVONDEN. Op beide teams verschijnt direct de Split the G-challenge. Jagers registreren daarna JA of NEE.</p>${powerButton('🐔 CHICKENS GEVONDEN!','catch',disabled||p.bombActive||(d.escapeUntil&&clockNow()<d.escapeUntil))}</div>`;
+  if(p.bombActive)html=`<div class="power-card"><strong>💥 JÄGERBOMB ACTIEF</strong><p>Stop de jacht. Iedere jager herlaadt met een Jägerbomb. Bewijs via WhatsApp.</p>${powerButton('✓ JA, JÄGERBOMB VOLTOOID','disarm',!seenNetwork||powerBusy)}</div>`+html;
  }
  el.innerHTML=html;
- // Two buttons share the same action, but differ by which challenge they start.
- let starter=0;
+ // Honey Trap and Celebrity Hunter are NEVER manually selectable power-ups:
+ // the Worker starts them automatically after 65 and 40 active game minutes.
  for(const btn of el.querySelectorAll('[data-action]')){
-  const action=btn.dataset.action;
-  if(action==='challenge-start'){const type=starter++===0?'honey':'celebrity';btn.addEventListener('click',()=>powerAction(action,type));}
-  else btn.addEventListener('click',()=>powerAction(action));
+  btn.addEventListener('click',()=>powerAction(btn.dataset.action));
  }
  const status=[];
  if(p.bombActive)status.push('💥 JÄGERBOMB ACTIEF');
@@ -412,7 +412,7 @@ function renderPowers(){
 function renderQuickAction(){
  const btn=$('roleQuickBtn');if(!btn)return;
  const p=serverState.powerups||{},d=serverState.duel||{};
- const running=serverState.status==='running'&&game&&clockNow()-game.start<7200000;
+ const running=serverState.status==='running'&&game&&gameClockNow()-game.start<7200000;
  if(!role||!running){btn.style.display='none';return}
  btn.style.display='flex';btn.disabled=!seenNetwork||powerBusy;
  if(role==='chicken'){
@@ -424,7 +424,7 @@ function renderQuickAction(){
    if(p.bombActive){btn.textContent='💣 JÄGERBOMB ACTIEF · OPEN MELDING';btn.disabled=false;}
    else if(d.status==='pending'){btn.textContent='🥃 SPLIT THE G BEZIG · OPEN MELDING';btn.disabled=false;}
    else if(d.escapeUntil&&clockNow()<d.escapeUntil){btn.textContent='🐔 CHICKENS HEBBEN VOORSPRONG';btn.disabled=true;}
-   else{btn.textContent='🎯 CHICKENS GEVONDEN!';btn.disabled ||= clockNow()-game.start<600000;}
+   else{btn.textContent='🎯 CHICKENS GEVONDEN!';btn.disabled ||= gameClockNow()-game.start<600000;}
  }
 }
 function quickAction(){
@@ -456,11 +456,11 @@ function renderGameAlert(){
   buttons=[['↻ OPNIEUW SPELEN','restart']];
  }else if(d.status==='pending'&&!(p.bombActive&&role==='hunter')){
   title=role==='hunter'?'🐔 CHICKENS GEVONDEN! · SPLIT THE G':'🐔 GEVANGEN! · SPLIT THE G';
-  body='Beide chickens zijn gevangen, maar een kip zonder kop kan doorlopen! Kies één chicken en één jager. Neem ieder één slok Guinness (0.0 mag) en probeer de vloeistoflijn exact door de G op het glas te laten lopen. Wie het best split, wint!';
-  foot=role==='hunter'?'JAGERS: registreer na de uitdaging JA als jullie winnen, NEE als de chickens winnen. Bij gelijkspel opnieuw proberen.':'CHICKENS: win Split the G om 60 seconden weg te mogen lopen. De jagers registreren daarna de uitslag.';
+  body='Beide chickens zijn gevangen, maar een kip zonder kop kan doorlopen! Kies één chicken en één jager. Neem ieder één slok Guinness en probeer de vloeistoflijn exact door de G op het glas te laten lopen. Wie het best split, wint!';
+  foot=role==='hunter'?'De spelklok en speelzone zijn gepauzeerd. Registreer JA bij winst jagers, NEE bij winst chickens. Bij gelijkspel opnieuw proberen.':'De spelklok en speelzone staan stil. Win Split the G en krijg 2 minuten om weg te komen, zonder verlies van reguliere speeltijd.';
   if(role==='hunter')buttons=[['✅ JA, JAGERS HEBBEN GEWONNEN','duel-result','hunter'],['❌ NEE, CHICKENS HEBBEN GEWONNEN','duel-result','chicken']];
  }else if(p.bombActive&&role==='hunter'){
-  title='‼️ 💣 JÄGERBOMB ‼️';body='BOEM! De chickens hebben een bom op jullie gedropt. STOP met jagen en herlaad in een pub. Ieder een Jägerbomb of alcoholvrij alternatief, met bewijs via WhatsApp.';
+  title='‼️ 💣 JÄGERBOMB ‼️';body='BOEM! De chickens hebben een bom op jullie gedropt. STOP met jagen en herlaad in een pub. Ieder een Jägerbomb, met bewijs via WhatsApp.';
   foot='Jagers: pas als jullie allebei klaar zijn, mogen jullie op JA, VOLTOOID drukken. Tot die tijd is de jacht gepauzeerd. De app kan fysieke beweging niet handhaven.';
   buttons=[['✅ JA, JÄGERBOMB VOLTOOID','disarm']];
  }else if(c.status==='active'){
@@ -479,8 +479,8 @@ function renderGameAlert(){
   const due=(serverState.events||[]).filter(ev=>{
     if(eventAcknowledged(ev))return false;
     const type=ev.type;
-    if(role==='chicken')return ['honey-won','honey-failed','celebrity-won','celebrity-failed','bomb','disarm'].includes(type);
-    return ['honey-won','honey-failed','celebrity-won','celebrity-failed','disarm'].includes(type);
+    if(role==='chicken')return ['honey-won','honey-failed','celebrity-won','celebrity-failed','bomb','disarm','chickens-escape'].includes(type);
+    return ['honey-won','honey-failed','celebrity-won','celebrity-failed','disarm','chickens-escape'].includes(type);
   });
   const ev=due[0];
   if(ev){
@@ -490,14 +490,15 @@ function renderGameAlert(){
     'celebrity-won':['📸 CELEBRITY HUNTER · GELUKT!','De jagers hebben de lookalike gefotografeerd! CHICKENS: stuur NU een foto van jullie directe omgeving via WhatsApp.'],
     'celebrity-failed':['📸 CELEBRITY HUNTER · MISLUKT!','Geen celebrity op tijd gevonden. Chickens hoeven geen omgevingsfoto te delen.'],
     bomb:['💣 BOM GEDROPT!','De jagers moeten stoppen en herladen. Jullie bom is nu opgebruikt.'],
-    disarm:['🔫 JÄGERBOMB ONTMANTELD','De jagers zijn herladen en mogen weer op jacht.']
+    disarm:['🔫 JÄGERBOMB ONTMANTELD','De jagers zijn herladen en mogen weer op jacht.'],
+    'chickens-escape':['🐔 CHICKENS WINNEN SPLIT THE G!','De oude ronde gaat verder in dezelfde zone, vanaf dezelfde tijd. De chickens hebben 2 minuten voorsprong; de jagers wachten.']
    };
    [title,body]=outcomes[ev.type]||['LIVE EVENT','Er is iets gebeurd.'];
    if(role==='hunter'&&(ev.type.endsWith('-won')))body='Gelukt! De chickens moeten nu de verdiende hint naar jullie sturen via WhatsApp.';
    if(role==='hunter'&&(ev.type.endsWith('-failed')))body='Niet gelukt binnen vijf minuten. Geen beloning en deze challenge is voor deze ronde opgebruikt.';
    buttons=[['✓ BEGREPEN','dismiss',ev.id]];
   }else if(d.escapeUntil&&clockNow()<d.escapeUntil){
-   title='🛡️ HEADLESS ESCAPE';body='De chickens hebben Split the G gewonnen! Jagers blijven 60 seconden stil. Tijd over: '+msToTimer(d.escapeUntil-clockNow());
+   title='🛡️ HEADLESS ESCAPE';body='De chickens hebben Split the G gewonnen! Jagers blijven 2 minuten stil. Tijd over: '+msToTimer(d.escapeUntil-clockNow());
    foot='De tweede kans is gebruikt. Bij de volgende vangst winnen de jagers direct.';
   }
  }
@@ -520,11 +521,11 @@ function renderGameAlert(){
 }
 function togglePowerPanel(force){if(!role){openRoleModal();return}const el=$('powerPanel');el.classList.toggle('open',typeof force==='boolean'?force:!el.classList.contains('open'));renderPowers()}
 function renderPhoto(){const el=$('photoOverlay');if(!role||role!=='chicken'||!game||(serverState.status==='captured'||serverState.status==='finished')){el.classList.remove('show');return}
- const mins=(clockNow()-game.start)/60000;
- const due=[{at:30,id:'1',text:'Foto-opdracht 1: maak samen een foto van jullie schuilplek en stuur hem via WhatsApp naar de jagers. Vermijd een exacte locatie.'},{at:70,id:'2',text:'Foto-opdracht 2: stuur opnieuw een foto van jullie huidige pub of omgeving naar de jagers via WhatsApp. Geen exacte GPS nodig.'}].filter(x=>mins>=x.at);
+ const mins=(gameClockNow()-game.start)/60000;
+ const due=[{at:30,id:'1',text:'Foto-opdracht 1: ga een pub binnen en vraag de barman of barvrouw of jullie samen op de foto mogen. Zorg dat beide chickens én de barman/barvrouw erop staan. Stuur de foto via WhatsApp naar de jagers.'},{at:70,id:'2',text:'Foto-opdracht 2: tijd voor een nieuwe foto! Zoek een barman of barvrouw in een pub en maak met jullie drieën een foto. Stuur hem via WhatsApp naar de jagers. Vraag eerst toestemming.'}].filter(x=>mins>=x.at);
  const pending=due.find(x=>{try{return localStorage.getItem('chicken-photo-'+room+'-'+serverState.revision+'-'+x.id)!=='dismissed'}catch(e){return true}});
  if(!pending){el.classList.remove('show');return}
- $('photoTitle').textContent='📸 FOTOCHALLENGE '+pending.id+' · CHICKENS';$('photoText').textContent=pending.text;
+ $('photoTitle').textContent='📸 BARPERSON PHOTO '+pending.id+' · CHICKENS';$('photoText').textContent=pending.text;
  el.dataset.photo=pending.id;if(!el.classList.contains('show'))notifyOnce('photo-'+serverState.revision+'-'+pending.id,'alert');el.classList.add('show');
 }
 function dismissPhoto(){const id=$('photoOverlay').dataset.photo;try{localStorage.setItem('chicken-photo-'+room+'-'+serverState.revision+'-'+id,'dismissed')}catch(e){}$('photoOverlay').classList.remove('show');renderPhoto()}
@@ -536,20 +537,21 @@ function startLocation(){if(!navigator.geolocation){showToast('Locatie is niet b
  },error=>{geoWatch=null;$('locateBtn').classList.remove('on');showToast(error.code===1?'Geef Safari toegang tot je locatie.':'Kon je locatie niet bepalen.');},{enableHighAccuracy:true,maximumAge:5000,timeout:16000})}
 function notifyOnce(key,type='beep'){if(!playedCues.has(key)){playedCues.add(key);sound(type)}}
 function tick(){
- const now=clockNow(),elapsed=game?(now-game.start)/60000:-1,stage=currentPhase(now),phaseElapsed=game?Math.max(0,elapsed-stage*20):0;
+ const now=gameClockNow(),elapsed=game?(now-game.start)/60000:-1,stage=currentPhase(now),phaseElapsed=game?Math.max(0,elapsed-stage*20):0;
  const status=$('livePill'),title=$('sideTitle'),timerLabel=$('timerLabel'),time=$('mainTimer'),chip=$('roundChip');let notice=null;
  if(!game){status.textContent='◷ WACHTKAMER';title.textContent='Ready for the hunt?';timerLabel.textContent='SPELDUUR';time.textContent='120:00';chip.textContent='6 ZONES';$('nextTime').textContent='—';notice={kind:'green',html:'<strong>🐔 Klaar om te spelen?</strong> Deel de spellink met alle spelers. Iedereen mag daarna op START drukken. Het spel begint voor iedereen tegelijk.'};}
  else if(serverState.status==='captured'){status.textContent='■ JAGERS WINNEN';title.textContent='Chickens caught!';timerLabel.textContent='SPEL AFGELOPEN';time.textContent='00:00';$('nextTime').textContent='—';chip.textContent='GAME OVER';notice={kind:'red',html:'<strong>🎯 JAGERS WINNEN!</strong> Beide chickens zijn gevangen. Klik op OPNIEUW SPELEN voor een nieuwe ronde.'};}
  else if(elapsed>=120){status.textContent='■ GAME OVER';title.textContent='Game over.';timerLabel.textContent='SPEL AFGELOPEN';time.textContent='00:00';$('nextTime').textContent='—';chip.textContent='FINISH';notice={kind:'green',html:'<strong>🏆 De chickens winnen!</strong> Twee uur voorbij. Klik op OPNIEUW SPELEN voor een nieuwe ronde met nieuwe zones.'};notifyOnce('finish','alert')}
- else {const waiting=elapsed<10;status.textContent=waiting?'◷ EENDENVOORSPRONG':'● GAME LIVE';chip.textContent='ZONE '+(stage+1)+' / 6';title.textContent=waiting?'Run, chickens, run.':stage===5?'FINAL HUNT.':'Stay out of sight.';timerLabel.textContent=stage===5?'TIJD TOT EINDE':'TIJD TOT VOLGENDE ZONE';time.textContent=msToTimer((stage===5?120-elapsed:20-phaseElapsed)*60000);$('nextTime').textContent=stage<5?formatClock(game.start+(stage+1)*20*60000):'FINISH';
- if(waiting){notice={kind:'green',html:'<strong>🐔 De chickens zijn vertrokken!</strong> Jagers wachten nog '+msToTimer((10-elapsed)*60000)+' bij het startpunt.'}}
- else if(elapsed>=115){notice={kind:'red',html:'<strong>🔥 LAATSTE 5 MINUTEN!</strong> De laatste zone heeft een straal van 150 meter.'}}
+ else {const waiting=elapsed<10,duelPaused=serverState.duel?.status==='pending';status.textContent=duelPaused?'⏸ SPEL GEPAUZEERD · SPLIT THE G':waiting?'◷ CHICKEN-VOORSPRONG':'● GAME LIVE';chip.textContent='ZONE '+(stage+1)+' / 6';title.textContent=duelPaused?'Split the G.':waiting?'Run, chickens, run.':stage===5?'FINAL HUNT.':'Stay out of sight.';timerLabel.textContent=duelPaused?'⏸ SPEELKLOK STILGEZET':stage===5?'TIJD TOT EINDE':'TIJD TOT VOLGENDE ZONE';time.textContent=msToTimer((stage===5?120-elapsed:20-phaseElapsed)*60000);$('nextTime').textContent=duelPaused?'⏸ PAUZE':stage<5?formatClock(game.start+(stage+1)*20*60000):'FINISH';
+ if(duelPaused){notice={kind:'red',html:'<strong>🥃 SPLIT THE G · PAUZE!</strong> De klok en de speelzone staan stil. Winnen de chickens, dan gaat de jacht verder vanaf exact dit moment, met 2 minuten voorsprong.'}}
+ else if(waiting){notice={kind:'green',html:'<strong>🐔 De chickens zijn vertrokken!</strong> Jagers wachten nog '+msToTimer((10-elapsed)*60000)+' bij het startpunt.'}}
+ else if(elapsed>=115){notice={kind:'red',html:'<strong>🔥 LAATSTE 5 MINUTEN!</strong> De laatste zone heeft een straal van 75 meter.'}}
  else if(phaseElapsed>=15&&stage<5){notice={kind:'red',html:'<strong>⚠ VOLGENDE ZONE BEKEND!</strong> De oranje stippellijn toont de nieuwe grens, actief over '+msToTimer((20-phaseElapsed)*60000)+'. Ga veilig die kant op.'}}
- else if(stage===5){notice={kind:'red',html:'<strong>🔥 FINAL ZONE!</strong> De laatste zone is 150 meter. Nog '+msToTimer((120-elapsed)*60000)+' tot de finish.'}}
+ else if(stage===5){notice={kind:'red',html:'<strong>🔥 FINAL ZONE!</strong> De laatste zone heeft een straal van 75 meter. Nog '+msToTimer((120-elapsed)*60000)+' tot de finish.'}}
  else{notice={kind:'dark',html:'<strong>🍺 Chicken Hunt is live.</strong> Over '+msToTimer((15-phaseElapsed)*60000)+' verschijnt de volgende, willekeurige zone. Chickens ontvangen hun foto-opdrachten afzonderlijk.'}}
  if(elapsed>=10)notifyOnce('hunt-start','alert');if(stage!==lastPhase){if(lastPhase>=0)notifyOnce('zone-'+stage,'alert');lastPhase=stage;refreshMap();renderPubs()}if(stage<5&&phaseElapsed>=15)notifyOnce('warning-'+stage,'alert');
  }
- $('zoneSize').textContent=stage===0?'Startgebied':RADII[stage]+' m';$('phaseStart').textContent=game?formatClock(game.start)+' · START':'WACHT OP START';$('phaseList').innerHTML=Array.from({length:6},(_,i)=>`<span class="phase-dot ${game&&i<stage?'done':game&&i===stage?'active':''}"></span>`).join('');
+ $('zoneSize').textContent=stage===0?'Startgebied':RADII[stage]+' m';$('phaseStart').textContent=game?formatClock(game.originalStart||game.start)+' · START':'WACHT OP START';$('phaseList').innerHTML=Array.from({length:6},(_,i)=>`<span class="phase-dot ${game&&i<stage?'done':game&&i===stage?'active':''}"></span>`).join('');
  $('noticeBox').className='notice foldable '+(notice.kind==='orange'?'':notice.kind);$('noticeBox').innerHTML=notice.html;
  renderQuickAction();
  const key=(!game?'lobby':stage+':'+(stage<5&&phaseElapsed>=15?'next':'current'));
