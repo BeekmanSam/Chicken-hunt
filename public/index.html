@@ -68,9 +68,9 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
 .power-panel{position:absolute;z-index:6;right:82px;top:20px;width:min(365px,calc(100% - 110px));max-height:67%;overflow:auto;display:none;background:#fffcf7;border:1px solid #dce7dc;border-radius:17px;box-shadow:0 15px 46px #0e201b56;padding:13px}
 .power-panel.open{display:block}.power-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px}.power-head strong{font-size:15px}.power-card{border:1px solid #e3e9df;background:white;border-radius:12px;padding:11px;margin-top:9px}.power-card strong{display:block;font-size:13px;margin-bottom:6px}.power-card p{font-size:11px;line-height:1.5;color:#53685a;margin:0 0 10px}.power-card .tag{font-size:10px;font-weight:800;color:#287451}.power-card button{border:0;background:#1a6245;color:#fff;border-radius:9px;padding:10px;width:100%;font-size:12px;font-weight:900}.power-card button.danger{background:#9b3432}.power-card button:disabled{background:#a4aea6}.power-card .tag:empty{display:none}
 .game-alert{display:none;position:absolute;z-index:9;top:90px;left:50%;transform:translateX(-50%);width:min(460px,calc(100% - 24px));background:#fffaf1;border:2px solid #e3b458;border-radius:20px;padding:18px;box-shadow:0 21px 65px #111d15a6}
-.game-alert.show{display:block}.game-alert h3{font-size:20px;line-height:1.1;letter-spacing:-.04em;margin:0 0 10px}.game-alert p{font-size:13px;line-height:1.52;color:#5d5849;margin:0 0 11px}.game-alert-actions{display:grid;gap:8px}.game-alert .btn{padding:12px}.game-alert .plain{background:#f0ede4}.game-alert .red{background:#9b3432;color:#fff}.game-alert .smallprint{font-size:10px;color:#7b7668;margin-top:11px}.challenge-countdown{font-variant-numeric:tabular-nums;font-size:35px;font-weight:900;text-align:center;letter-spacing:-.04em;color:#a35218;margin:10px 0;padding:11px;border:1px solid #f0deb7;border-radius:12px;background:#fff1d6}.challenge-countdown[hidden]{display:none}.challenge-strip{position:absolute;z-index:7;top:15px;left:50%;transform:translateX(-50%);display:none;align-items:center;gap:10px;border-radius:14px;padding:9px 12px;background:#fff6de;border:1px solid #e8ad42;box-shadow:0 6px 24px #11221c3d;font-size:12px;font-weight:800;white-space:nowrap;max-width:calc(100% - 95px)}.challenge-strip.show{display:flex}.challenge-strip b{font-variant-numeric:tabular-nums;color:#a35218}.challenge-strip button{background:#1a6245;border:0;border-radius:7px;color:white;padding:7px 9px;font-weight:800;font-size:10px}.challenge-countdown small{display:block;font-size:10px;letter-spacing:.08em;color:#805f30;margin-bottom:3px}
+.game-alert.show{display:block}.game-alert.grouse-active{max-height:calc(100dvh - 112px);overflow-y:auto}.game-alert.grouse-active #alertBody{white-space:pre-line}.game-alert h3{font-size:20px;line-height:1.1;letter-spacing:-.04em;margin:0 0 10px}.game-alert p{font-size:13px;line-height:1.52;color:#5d5849;margin:0 0 11px}.game-alert-actions{display:grid;gap:8px}.game-alert .btn{padding:12px}.game-alert .plain{background:#f0ede4}.game-alert .red{background:#9b3432;color:#fff}.game-alert .smallprint{font-size:10px;color:#7b7668;margin-top:11px}.challenge-countdown{font-variant-numeric:tabular-nums;font-size:35px;font-weight:900;text-align:center;letter-spacing:-.04em;color:#a35218;margin:10px 0;padding:11px;border:1px solid #f0deb7;border-radius:12px;background:#fff1d6}.challenge-countdown[hidden]{display:none}.challenge-strip{position:absolute;z-index:7;top:15px;left:50%;transform:translateX(-50%);display:none;align-items:center;gap:10px;border-radius:14px;padding:9px 12px;background:#fff6de;border:1px solid #e8ad42;box-shadow:0 6px 24px #11221c3d;font-size:12px;font-weight:800;white-space:nowrap;max-width:calc(100% - 95px)}.challenge-strip.show{display:flex}.challenge-strip b{font-variant-numeric:tabular-nums;color:#a35218}.challenge-strip button{background:#1a6245;border:0;border-radius:7px;color:white;padding:7px 9px;font-weight:800;font-size:10px}.challenge-countdown small{display:block;font-size:10px;letter-spacing:.08em;color:#805f30;margin-bottom:3px}
 #powerBtn{background:#f4b346;color:#30250d}.power-live{font-size:11px;font-weight:900;color:#a03530}.power-live:empty{display:none}
-@media(max-width:700px){.power-panel{right:12px;top:69px;width:min(360px,calc(100% - 24px));max-height:55%}.game-alert{top:12px;padding:15px}.challenge-strip{top:68px;left:12px;right:67px;transform:none;max-width:none;white-space:normal}.game-alert h3{font-size:18px}}
+@media(max-width:700px){.power-panel{right:12px;top:69px;width:min(360px,calc(100% - 24px));max-height:55%}.game-alert{top:12px;padding:15px}.game-alert.grouse-active{max-height:calc(100dvh - 24px)}.challenge-strip{top:68px;left:12px;right:67px;transform:none;max-width:none;white-space:normal}.game-alert h3{font-size:18px}}
 
 /* V6: Dedicated team action is always visible even in the compact map view. */
 #roleQuickBtn{padding:11px 10px;margin-top:7px;background:#b04b2b;color:#fff;font-weight:900;letter-spacing:.015em;display:flex;line-height:1.25;min-height:39px}
@@ -83,7 +83,7 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
 <body>
 <div id="app">
 <header>
-  <div class="brand"><div class="ducky">🐔</div><div><div class="brand-title">CHICKEN HUNT <span style="color:#f3b64d">DUBLIN</span></div><div class="brand-sub">2 CHICKENS · 2 HUNTERS · LIVE V9</div></div></div>
+  <div class="brand"><div class="ducky">🐔</div><div><div class="brand-title">CHICKEN HUNT <span style="color:#f3b64d">DUBLIN</span></div><div class="brand-sub">2 CHICKENS · 2 HUNTERS · LIVE V10</div></div></div>
   <div class="top-right"><span class="top-date">SAT 7 NOV · FROM 17:00</span><button class="role-pill" id="roleChip" title="Wijzig je rol" style="display:none">ROL</button><span class="live-pill" id="livePill">● LOBBY</span></div>
 </header>
 <div id="statusRibbon" role="alert">Geen verbinding met de spelsynchronisatie. Gebruik de nieuwe Cloudflare Workers-link, niet de oude Pages-link.</div>
@@ -99,7 +99,7 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
     </div><button type="button" class="btn quick-action" id="roleQuickBtn" style="display:none" disabled>Actie laden…</button><button id="detailsBtn">▲ Alle spelinfo</button>
     <div id="roomInfo">SPELROOM WORDT GELADEN…</div><div class="server-state" id="connectionLabel">Verbinden met live spel…</div></section>
     <div class="power-live" id="powerStatus" aria-live="polite"></div>
-    <section class="panel foldable"><div class="splithead"><h3>ZONE PROGRESSION</h3><span class="session-id" id="sessionId">V9 · LIVE</span></div><div class="phase-list" id="phaseList"></div><div class="phase-meta"><span id="phaseStart">17:00 · START</span><span>120 MIN · FINISH</span></div><p class="hint" style="margin-bottom:0">Iedere 20 minuten krimpt het gebied. De volgende zone verschijnt 5 minuten eerder.</p></section>
+    <section class="panel foldable"><div class="splithead"><h3>ZONE PROGRESSION</h3><span class="session-id" id="sessionId">V10 · LIVE</span></div><div class="phase-list" id="phaseList"></div><div class="phase-meta"><span id="phaseStart">17:00 · START</span><span>120 MIN · FINISH</span></div><p class="hint" style="margin-bottom:0">Iedere 20 minuten krimpt het gebied. De volgende zone verschijnt 5 minuten eerder.</p></section>
     <div class="notice green foldable" id="noticeBox"><strong>🐔 Eerste 10 minuten:</strong> de chickens vertrekken, terwijl de jagers blijven wachten op de startlocatie.</div>
     <div class="btn-group foldable"><button class="btn secondary" id="sidebarPowers">⚡ Open power-ups</button><button class="btn gold" id="shareBtn">↗ Deel de spellink</button><button class="btn plain" id="audioBtn">♪ Geluid aanzetten</button><button class="btn secondary" id="pubsBtn">🍺 Bekijk alle pubs</button></div>
     <section class="panel foldable"><h3>DE REGELS</h3><ul class="rules"><li>De chickens blijven samen; de jagers ook.</li><li>De chickens mogen pubs in en uit.</li><li>Jagers die een pub doorzoeken, bestellen volgens jullie afspraak een drankje. Drink met mate en respecteer elkaars grenzen.</li><li>Bij de eerste vangst volgt Split the G: winnen de chickens, dan gaat dezelfde ronde verder. Na de tweede vangst winnen de jagers direct.</li><li>Is na twee uur geen definitieve vangst geregistreerd? Dan winnen de chickens.</li><li>Spelers houden zich eerlijk aan de actieve zone. Publieke, veilige routes blijven leidend.</li></ul></section>
@@ -111,8 +111,8 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
     <div class="legend"><div class="legend-item"><span class="swatch"></span>Actieve speelzone</div><div class="legend-item"><span class="swatch preview"></span>Volgende zone</div><div class="legend-item"><span class="swatch pub"></span>Pub / bar</div><div class="legend-item"><span class="swatch you"></span>Jouw locatie</div></div>
     <div class="pub-drawer" id="pubDrawer"><div class="pub-head"><h3 id="pubCount">🍺 Pubs in het spel</h3><button class="tiny" id="closePubs">SLUIT ×</button></div><input id="pubSearch" class="pub-search" placeholder="Zoek een pub..." autocomplete="off"><div class="pub-items" id="pubItems"></div></div>
     <section class="power-panel" id="powerPanel" aria-label="Power-ups en challenges"><div class="power-head"><strong>⚡ LIVE POWER-UPS</strong><button class="tiny" id="closePowers">SLUIT ×</button></div><div id="powersContent"></div><p class="hint">Bewijs van challenges gaat via WhatsApp; de app synchroniseert de beloning. De teams bevestigen eerlijk.</p></section>
-    <div class="challenge-strip" id="challengeStrip"><span id="challengeStripLabel">CHALLENGE</span><b id="challengeStripTime">05:00</b><button id="challengeStripOpen">OPEN</button></div>
-    <div class="game-alert" id="gameAlert" role="alertdialog" aria-live="assertive"><h3 id="alertTitle">LIVE EVENT</h3><p id="alertBody"></p><div class="challenge-countdown" id="alertCountdown" hidden><small>CHALLENGE TIJD OVER</small><span id="alertClock">05:00</span></div><div id="alertActions" class="game-alert-actions"></div><div class="smallprint" id="alertFoot"></div></div>
+    <div class="challenge-strip" id="challengeStrip"><span id="challengeStripLabel">CHALLENGE</span><b id="challengeStripTime">10:00</b><button id="challengeStripOpen">OPEN</button></div>
+    <div class="game-alert" id="gameAlert" role="alertdialog" aria-live="assertive"><h3 id="alertTitle">LIVE EVENT</h3><p id="alertBody"></p><div class="challenge-countdown" id="alertCountdown" hidden><small>CHALLENGE TIJD OVER</small><span id="alertClock">10:00</span></div><div id="alertActions" class="game-alert-actions"></div><div class="smallprint" id="alertFoot"></div></div>
     <div class="photo-overlay" id="photoOverlay" role="alertdialog" aria-live="assertive" aria-label="Foto opdracht"><strong id="photoTitle">📸 FOTOCHALLENGE</strong><p id="photoText">Maak samen een foto.</p><button id="photoDismissBtn">✓ Begrepen, sluit melding</button></div>
     <div class="bottom-toast" id="toast" role="status"></div>
   </div>
@@ -137,7 +137,7 @@ main{display:flex;flex:1;min-height:0;position:relative}.sidebar{width:385px;fle
 <script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
 <script>
 'use strict';
-// CHICKEN HUNT DUBLIN V9 — one shared Cloudflare room; deterministic seeded zones.
+// CHICKEN HUNT DUBLIN V10 — one shared Cloudflare room; deterministic seeded zones.
 const RULES={duration:120,headstart:10,zones:6,step:20,warning:5,scheduleUTC:Date.UTC(2026,10,7,17,0,0)};
 // Dublin is UTC+0 on 7 November 2026; 17:00 Dublin = 17:00 UTC.
 const REF=[-6.265,53.3383], METERS_X=66300, METERS_Y=111200;
@@ -363,7 +363,7 @@ async function changeGame(action){if(!role){openRoleModal();return}if(!seenNetwo
 }
 async function powerAction(action,winner=null){
  if(powerBusy||!seenNetwork||!role)return;
- const warnings={bomb:'Drop jullie ENIGE JÄGERBOMB van deze ronde? Alle jagers moeten onmiddellijk stoppen tot ze allebei voltooid hebben.',disarm:'Hebben BEIDE jagers hun Jägerbomb voltooid? Pas dan mogen jullie de jacht hervatten.','challenge-success':'Is de opdracht daadwerkelijk binnen 5 minuten voltooid? Controleer het bewijs via WhatsApp.','challenge-fail':'Geef je de challenge op? Dan krijgen de jagers geen beloning.',catch:'Hebben jullie BEIDE chickens echt gevonden? Dan begint voor iedereen onmiddellijk Split the G.', 'duel-result':'Klopt de uitslag van Split the G? Bevestig JA bij winst jagers en NEE bij winst chickens.'};
+ const warnings={bomb:'Drop jullie ENIGE JÄGERBOMB van deze ronde? Alle jagers moeten onmiddellijk stoppen tot ze allebei voltooid hebben.',disarm:'Hebben BEIDE jagers hun Jägerbomb voltooid? Pas dan mogen jullie de jacht hervatten.','challenge-success':'Is de opdracht daadwerkelijk binnen 10 minuten voltooid? Controleer het bewijs via WhatsApp.','challenge-fail':serverState.challenge?.type==='grouse'?'Geef je Famous Grouse op? Dan blijft de locatie van de jagers geheim.':'Geef je de challenge op? Dan krijgen de jagers geen beloning.',catch:'Hebben jullie BEIDE chickens echt gevonden? Dan begint voor iedereen onmiddellijk Split the G.', 'duel-result':'Klopt de uitslag van Split the G? Bevestig JA bij winst jagers en NEE bij winst chickens.'};
  if(!confirm(warnings[action]||'Power-up bevestigen?'))return;
  powerBusy=true;renderPowers();
  try{const before=Date.now(),data=await api('/api/game/action','POST',{action,role,winner,type:null});serverOffset=data.serverTime-(before+Date.now())/2;applyState(data);$('powerPanel').classList.remove('open');}
@@ -403,7 +403,7 @@ function renderPowers(){
  }
  const status=[];
  if(p.bombActive)status.push('💥 JÄGERBOMB ACTIEF');
- if(challengeActive)status.push('⏳ '+(c.type==='honey'?'HONEY TRAP':'CELEBRITY HUNTER')+' '+msToTimer(Math.max(0,c.deadline-clockNow())));
+ if(challengeActive)status.push('⏳ '+(c.type==='grouse'?'OPERATIE FAMOUS GROUSE':c.type==='honey'?'HONEY TRAP':'CELEBRITY HUNTER')+' '+msToTimer(Math.max(0,c.deadline-clockNow())));
  if(d.status==='pending')status.push('🐔 SPLIT THE G');
  if(d.escapeUntil&&clockNow()<d.escapeUntil)status.push('🛡️ CHICKENS IMMUUN '+msToTimer(d.escapeUntil-clockNow()));
  $('powerStatus').textContent=status.join(' · ');renderQuickAction();
@@ -442,7 +442,7 @@ function updateChallengeStrip(){
  const c=serverState.challenge||{};
  const live=serverState.status==='running'&&c.status==='active'&&!gameEnded();
  $('challengeStrip').classList.toggle('show',live);
- if(live){$('challengeStripLabel').textContent=c.type==='honey'?'💋 HONEY TRAP':'📸 CELEBRITY HUNTER';$('challengeStripTime').textContent=msToTimer(Math.max(0,c.deadline-clockNow()))}
+ if(live){$('challengeStripLabel').textContent=c.type==='grouse'?'🐔 FAMOUS GROUSE':c.type==='honey'?'💋 HONEY TRAP':'📸 CELEBRITY HUNTER';$('challengeStripTime').textContent=msToTimer(Math.max(0,c.deadline-clockNow()))}
 }
 function minimizeChallenge(){minimizedChallengeKey=challengeKey();renderGameAlert()}
 function renderGameAlert(){
@@ -465,37 +465,43 @@ function renderGameAlert(){
   buttons=[['✅ JA, JÄGERBOMB VOLTOOID','disarm']];
  }else if(c.status==='active'){
   timer=true;
-  if(c.type==='honey'){
-   title=role==='hunter'?'💋 HONEY TRAP · 5 MINUTEN':'🚨 JAGERS PROBEREN HONEY TRAP!';
-   body=role==='hunter'?'Fix binnen vijf minuten het nummer of Instagram-account van een Ierse. Bewijs via WhatsApp; meld vóór de timer op nul staat dat het gelukt is.':'De jagers hebben vijf minuten om een nummer of Instagram te regelen. Als ze slagen moeten jullie je actuele WhatsApp-locatie delen. Als ze falen, hoeven jullie niets te doen.';
+  if(c.type==='grouse'){
+   title=role==='chicken'?'🐔 OPERATIE FAMOUS GROUSE · 10 MINUTEN':'🚨 DE PATRIJZEN SCHIETEN TE HULP!';
+   body=role==='chicken'?'Kukelekuuu! 🐔 Het einde lijkt nabij! De jagers komen steeds dichterbij en jullie veren zijn niet langer veilig.\n\nMaar er is hoop! Ierland staat bekend om zijn whiskey en jullie verre Schotse neven, de patrijzen van Famous Grouse, hebben besloten jullie te hulp te schieten! Hun geheime inlichtingendienst weet waar de jagers zijn, maar ze geven hun geheimen niet zomaar prijs...\n\n🍺 DE OPDRACHT\nBestel binnen 10 minuten een shot Famous Grouse whisky in een Ierse pub. Maak een foto waarop BEIDE chickens met hun shot poseren en de fles Famous Grouse duidelijk zichtbaar is. Stuur de foto via WhatsApp.\n\n✅ BIJ SUCCES\nDe jagers moeten onmiddellijk hun actuele locatie delen via WhatsApp.\n\n❌ BIJ MISLUKKING\nDe patrijzen houden hun snavel dicht. Geen informatie over de jagers!\n\n🐔🥃 Vogels van dezelfde veren moeten elkaar steunen!':'De chickens hebben 10 minuten om een shot Famous Grouse whisky te bestellen en een foto te sturen waarop beide chickens met hun shot én de duidelijk zichtbare fles staan. Lukt het, dan moeten JULLIE onmiddellijk je actuele locatie via WhatsApp met de chickens delen. Bij mislukking hoeven jullie niets te delen.';
+   foot=role==='chicken'?'Alleen de chickens melden de uitslag. Bewijsfoto via WhatsApp; de tienminutentimer loopt op beide teams.':'Dezelfde tienminutentimer is zichtbaar op alle telefoons. Bij succes delen de jagers hun locatie via WhatsApp.';
+  }else if(c.type==='honey'){
+   title=role==='hunter'?'💋 HONEY TRAP · 10 MINUTEN':'🚨 JAGERS PROBEREN HONEY TRAP!';
+   body=role==='hunter'?'Fix binnen tien minuten het nummer of Instagram-account van een Ierse. Bewijs via WhatsApp; meld vóór de timer op nul staat dat het gelukt is.':'De jagers hebben tien minuten om een nummer of Instagram te regelen. Als ze slagen moeten jullie je actuele WhatsApp-locatie delen. Als ze falen, hoeven jullie niets te doen.';
   }else{
-   title=role==='hunter'?'🥊 CELEBRITY HUNTER · 5 MINUTEN':'🚨 JAGERS ZOEKEN EEN CELEBRITY!';
-   body=role==='hunter'?'Vind binnen vijf minuten een McGregor- of Ed Sheeran-lookalike en maak een foto met toestemming. Stuur bewijs via WhatsApp en bevestig op tijd.':'De jagers zoeken vijf minuten naar een McGregor- of Ed Sheeran-lookalike. Lukt het, dan moeten jullie een actuele omgevingsfoto sturen. Anders niet.';
+   title=role==='hunter'?'🥊 CELEBRITY HUNTER · 10 MINUTEN':'🚨 JAGERS ZOEKEN EEN CELEBRITY!';
+   body=role==='hunter'?'Vind binnen tien minuten een McGregor- of Ed Sheeran-lookalike en maak een foto met toestemming. Stuur bewijs via WhatsApp en bevestig op tijd.':'De jagers zoeken tien minuten naar een McGregor- of Ed Sheeran-lookalike. Lukt het, dan moeten jullie een actuele omgevingsfoto sturen. Anders niet.';
   }
-  foot=role==='hunter'?'Eén kans per challenge per spel.':'Dezelfde timer loopt op alle vier de telefoons.';
-  if(role==='hunter')buttons=[['✓ OPDRACHT GELUKT','challenge-success'],['✕ NIET GELUKT','challenge-fail']];
+  if(c.type!=='grouse')foot=role==='hunter'?'Eén kans per challenge per spel.':'Dezelfde timer loopt op alle vier de telefoons.';
+  if(c.type==='grouse'?role==='chicken':role==='hunter')buttons=[['✓ OPDRACHT GELUKT','challenge-success'],['✕ NIET GELUKT','challenge-fail']];
   buttons.push(['↘ MINIMALISEER','minimize']);
  }else{
   const due=(serverState.events||[]).filter(ev=>{
     if(eventAcknowledged(ev))return false;
     const type=ev.type;
-    if(role==='chicken')return ['honey-won','honey-failed','celebrity-won','celebrity-failed','bomb','disarm','chickens-escape'].includes(type);
-    return ['honey-won','honey-failed','celebrity-won','celebrity-failed','disarm','chickens-escape'].includes(type);
+    if(role==='chicken')return ['honey-won','honey-failed','celebrity-won','celebrity-failed','grouse-won','grouse-failed','bomb','disarm','chickens-escape'].includes(type);
+    return ['honey-won','honey-failed','celebrity-won','celebrity-failed','grouse-won','grouse-failed','disarm','chickens-escape'].includes(type);
   });
   const ev=due[0];
   if(ev){
    const outcomes={
-    'honey-won':['💋 HONEY TRAP · GELUKT!','De jagers hebben binnen vijf minuten een contact gefixt! CHICKENS: stuur NU jullie huidige WhatsApp-locatie.'],
+    'honey-won':['💋 HONEY TRAP · GELUKT!','De jagers hebben binnen tien minuten een contact gefixt! CHICKENS: stuur NU jullie huidige WhatsApp-locatie.'],
     'honey-failed':['💋 HONEY TRAP · MISLUKT!','De jagers hebben hun opdracht niet op tijd gehaald. Chickens hoeven geen locatie te delen.'],
     'celebrity-won':['📸 CELEBRITY HUNTER · GELUKT!','De jagers hebben de lookalike gefotografeerd! CHICKENS: stuur NU een foto van jullie directe omgeving via WhatsApp.'],
     'celebrity-failed':['📸 CELEBRITY HUNTER · MISLUKT!','Geen celebrity op tijd gevonden. Chickens hoeven geen omgevingsfoto te delen.'],
+    'grouse-won':['🐔 OPERATIE FAMOUS GROUSE · GELUKT!','De patrijzen hebben gesproken! JAGERS: stuur onmiddellijk jullie actuele locatie via WhatsApp naar de chickens.'],
+    'grouse-failed':['🐔 OPERATIE FAMOUS GROUSE · MISLUKT!','De patrijzen houden hun snavel dicht. De chickens hebben geen informatie over de jagers verdiend.'],
     bomb:['💣 BOM GEDROPT!','De jagers moeten stoppen en herladen. Jullie bom is nu opgebruikt.'],
     disarm:['🔫 JÄGERBOMB ONTMANTELD','De jagers zijn herladen en mogen weer op jacht.'],
     'chickens-escape':['🐔 CHICKENS WINNEN SPLIT THE G!','De oude ronde gaat verder in dezelfde zone, vanaf dezelfde tijd. De chickens hebben 2 minuten voorsprong; de jagers wachten.']
    };
    [title,body]=outcomes[ev.type]||['LIVE EVENT','Er is iets gebeurd.'];
-   if(role==='hunter'&&(ev.type.endsWith('-won')))body='Gelukt! De chickens moeten nu de verdiende hint naar jullie sturen via WhatsApp.';
-   if(role==='hunter'&&(ev.type.endsWith('-failed')))body='Niet gelukt binnen vijf minuten. Geen beloning en deze challenge is voor deze ronde opgebruikt.';
+   if(role==='hunter'&&(ev.type.endsWith('-won'))&&ev.type!=='grouse-won')body='Gelukt! De chickens moeten nu de verdiende hint naar jullie sturen via WhatsApp.';
+   if(role==='hunter'&&(ev.type.endsWith('-failed'))&&ev.type!=='grouse-failed')body='Niet gelukt binnen tien minuten. Geen beloning en deze challenge is voor deze ronde opgebruikt.';
    buttons=[['✓ BEGREPEN','dismiss',ev.id]];
   }else if(d.escapeUntil&&clockNow()<d.escapeUntil){
    title='🛡️ HEADLESS ESCAPE';body='De chickens hebben Split the G gewonnen! Jagers blijven 2 minuten stil. Tijd over: '+msToTimer(d.escapeUntil-clockNow());
@@ -506,6 +512,7 @@ function renderGameAlert(){
  if(timer&&minimizedChallengeKey===challengeKey()){el.classList.remove('show');el.dataset.signature='';updateChallengeStrip();return}
  updateChallengeStrip();
  $('alertTitle').textContent=title;$('alertBody').textContent=body;$('alertFoot').textContent=foot;
+ el.classList.toggle('grouse-active',timer&&c.type==='grouse');
  $('alertCountdown').hidden=!timer;
  if(timer)$('alertClock').textContent=msToTimer(Math.max(0,c.deadline-clockNow()));
  const signature=JSON.stringify([title,body,foot,buttons,timer]);
