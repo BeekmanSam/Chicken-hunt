@@ -1,19 +1,20 @@
 import { DurableObject } from 'cloudflare:workers';
 
-// V9: Cloudflare Durable Object is the single source of truth for each room.
+// V10: Cloudflare Durable Object is the single source of truth for each room.
 // No GPS coordinates, phone numbers, names, media or challenge evidence are stored.
 const GAME_MS = 120 * 60000;
 const HEADSTART_MS = 10 * 60000;
-const CHALLENGE_MS = 5 * 60000;
+const CHALLENGE_MS = 10 * 60000;
 // Automatic, server-authoritative challenges (minutes of active game time).
 const AUTO_CHALLENGES = [
   { type: 'celebrity', minute: 40 },
-  { type: 'honey', minute: 65 }
+  { type: 'honey', minute: 65 },
+  { type: 'grouse', minute: 90 }
 ];
 const ESCAPE_MS = 2 * 60000;
 const DEFAULT_STATE = {
   status: 'lobby', revision: 0, seed: null, start: null, originalStart: null,
-  powerups: { bombUsed: false, bombActive: false, honeyUsed: false, celebrityUsed: false },
+  powerups: { bombUsed: false, bombActive: false, honeyUsed: false, celebrityUsed: false, grouseUsed: false },
   challenge: { type: null, status: 'none', startedAt: null, deadline: null, finishedAt: null },
   duel: { used: false, status: 'none', winner: null, escapeUntil: null, pausedAt: null },
   eventSeq: 0, events: []
@@ -91,17 +92,17 @@ function applyAction(st, body, now) {
       if (!chickens) throw new Error('Alleen chickens kunnen de Jägerbomb droppen.');
       if (p.bombUsed) throw new Error('Jägerbomb is al gebruikt.');
       // Chickens may drop their one bomb at ANY point during an active round, even in the head start or Split the G.
-      if (c.status === 'active') markFailed(st, now); // a bomb sabotages a live hunter challenge
+      if (c.status === 'active' && c.type !== 'grouse') markFailed(st, now); // a bomb sabotages a live hunter challenge, not a chicken challenge
       p.bombUsed = true; p.bombActive = true; event(st, 'bomb', now); break;
     case 'disarm':
       if (!hunters || !p.bombActive) throw new Error('Er is geen actieve Jägerbomb.');
       p.bombActive = false; event(st, 'disarm', now); break;
     case 'challenge-success':
-      if (!hunters || c.status !== 'active') throw new Error('Er loopt geen challenge.');
+      if ((c.type === 'grouse' ? !chickens : !hunters) || c.status !== 'active') throw new Error('Er loopt geen challenge voor jullie team.');
       if (now >= c.deadline) { markFailed(st, now); break; } // server clock decides
       c.status = 'won'; c.finishedAt = now; event(st, c.type + '-won', now); break;
     case 'challenge-fail':
-      if (!hunters || c.status !== 'active') throw new Error('Er loopt geen challenge.');
+      if ((c.type === 'grouse' ? !chickens : !hunters) || c.status !== 'active') throw new Error('Er loopt geen challenge voor jullie team.');
       markFailed(st, now); break;
     case 'catch':
       if (!hunters) throw new Error('Alleen jagers kunnen een vangst melden.');
